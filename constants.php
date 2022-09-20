@@ -5,4 +5,4 @@
  * Unity Shell constants.
  */
 
-const PROJECT_ROOT = __DIR__;
+const MAESTRO_ROOT = __DIR__;

@@ -3,10 +3,7 @@
 namespace Maestro;
 
 use Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand;
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application as ParentApplication;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Maestro\Commands\ProjectUpdateBaseCommand;
 use Maestro\Commands\ProjectBuildCommand;
 use Maestro\Commands\ProjectCreateCommand;
@@ -55,13 +52,7 @@ class Application extends ParentApplication {
    */
   public function container() {
     if (!isset($this->container)) {
-      $this->container = new ContainerBuilder();
-      $loader = new YamlFileLoader($this->container, new FileLocator());
-      $loader->load(Utils::shellRoot() . '/services.yml');
-    }
-
-    if (file_exists(Utils::projectRoot() . '/maestro.yml')) {
-      $loader->load(Utils::projectRoot() . '/maestro.yml');
+      $this->container = Utils::container();
     }
 
     return $this->container;
