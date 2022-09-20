@@ -22,8 +22,8 @@ class PlatformSH extends Hosting implements HostingInterface {
     // in the Platform services file.
     $solr_required = FALSE;
 
-    $platform = $this->fs()->readFile('/.hosting/PlatformSH/templates/.platform.app.template.yaml');
-    $services = $this->fs()->readFile('/.hosting/PlatformSH/templates/.services.template.yaml');
+    $platform = $this->fs()->readFile($this->path() . '/templates/.platform.app.template.yaml');
+    $services = $this->fs()->readFile($this->path() . '/templates/.services.template.yaml');
 
     $platform['name'] = Utils::createApplicationId($this->project()->name());
 
@@ -115,15 +115,15 @@ class PlatformSH extends Hosting implements HostingInterface {
 
     // Copy Solr configuration to platform directory.
     $io->writeln('Copying Solr configuration.');
-    $this->fs()->mirror('/.hosting/platformsh/resources/solr_config', '/.platform/solr_config');
+    $this->fs()->mirror($this->path() . '/files/solr_config', '/.platform/solr_config');
 
     // Copy environment file.
     $io->writeln('Copying environment file.');
-    $this->fs()->copy('/.hosting/platformsh/resources/.environment', '/.environment');
+    $this->fs()->copy($this->path() . '/files/.environment', '/.environment');
 
     // Copy Redis installer file.
     $io->writeln('Copying Redis install script.');
-    $this->fs()->copy('/.hosting/platformsh/resources/install-redis.sh', '/install-redis.sh');
+    $this->fs()->copy($this->path() . '/files/install-redis.sh', '/install-redis.sh');
 
     $this->addInstructions('Download PlatformSH databases: platform db:dump -p ' . $this->project()->id());
     $this->addInstructions('Download PlatformSH files: platform mount:download -p ' . $this->project()->id());

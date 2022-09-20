@@ -2,7 +2,6 @@
 
 namespace Maestro\Commands;
 
-use Composer\InstalledVersions;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -49,7 +48,7 @@ class ProjectBuildCommand extends Command {
     }
 
     // Check we have the required hosting package.
-    if (!InstalledVersions::isInstalled('dof-dss/maestro-hosting')) {
+    if (!$this->fs()->exists('vendor/dof-dss/maestro-hosting')) {
       $io->warning("Required package 'dof-dss/maestro-hosting' is not installed. You will not be able to generate hosting configuration for this project.");
       return Command::FAILURE;
     }

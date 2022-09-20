@@ -62,16 +62,15 @@ abstract class Hosting {
    * @throws \Exception
    */
   public function __construct() {
-    $this->container = new ContainerBuilder();
-    $loader = new YamlFileLoader($this->container, new FileLocator());
-    $loader->load(Utils::shellRoot() . '/services.yml');
+    $this->container = Utils::container();
 
     $this->fs = $this->container->get('maestro.filesystem');
     $this->project = new Project();
 
     // Enable if the hosting service has the required directory configuration
     // directory in the project root directory.
-    $this->isEnabled = $this->fs()->exists('/.hosting/' . $this->name());
+
+    $this->isEnabled = $this->fs()->exists($this->path());
   }
 
   /**
@@ -156,6 +155,20 @@ abstract class Hosting {
    */
   protected function io() {
     return $this->io;
+  }
+
+
+  /**
+   * Returns the filepath to hosting service.
+   *
+   * @return string
+   *   The relative filepath to the hosting service within the vendor directory.
+   */
+  public function path() {
+
+    return 'vendor/dof-dss/maestro-hosting/resources/'
+      . $this->project()->type()
+      . '/' . $this->name();
   }
 
 }

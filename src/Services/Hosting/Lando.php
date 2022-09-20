@@ -40,7 +40,7 @@ class Lando extends Hosting implements HostingInterface {
 
     // Copy the base configuration for Lando.
     $io->writeln("Creating Lando base configuration file.");
-    $this->fs()->copy('/.hosting/Lando/templates/.lando.base.yml', '/.lando.base.yml');
+    $this->fs()->copy($this->path() . '/templates/.lando.base.yml', '/.lando.base.yml');
 
     // Create project specific Lando file.
     $io->writeln("Creating Lando project configuration file.");
@@ -49,18 +49,18 @@ class Lando extends Hosting implements HostingInterface {
     // Copy Lando resources to the project.
     $io->writeln("Copying Lando resources to project.");
     $this->fs()->mkdir('/.lando');
-    $this->fs()->mirror('/.hosting/Lando/resources/', '/.lando');
+    $this->fs()->mirror($this->path() . '/files/', '/.lando');
 
     // Copy Lando Drupal services file if one doesn't already exist.
     if (!$this->fs()->exists('/web/sites/default/services.yml')) {
       $io->writeln("Copying Lando Drupal services file.");
-      $this->fs()->copy('/.hosting/Lando/templates/drupal.services.yml', '/web/sites/default/services.yml');
+      $this->fs()->copy($this->path() . '/templates/drupal.services.yml', '/web/sites/default/services.yml');
     }
 
     // Copy Lando Redis config file if one doesn't already exist.
     if (!$this->fs()->exists('/web/sites/default/redis.services.yml')) {
       $io->writeln("Copying Lando Redis config file.");
-      $this->fs()->copy('/.hosting/Lando/templates/redis.services.yml', '/web/sites/default/redis.services.yml');
+      $this->fs()->copy($this->path() . '/templates/redis.services.yml', '/web/sites/default/redis.services.yml');
     }
 
     // Create public files directory if one doesn't already exist.
@@ -80,7 +80,7 @@ class Lando extends Hosting implements HostingInterface {
       // Copy from the sample env file as it may have project specific entries.
       // If sample.en doesn't exist, copy the basic version.
       if (!$this->fs()->exists('/.env.sample')) {
-        $this->fs()->copy('/.hosting/Lando/templates/.env.sample', '/.env.sample');
+        $this->fs()->copy($this->path() . '/templates/.env.sample', '/.env.sample');
       }
 
       $this->fs()->copy('/.env.sample', '/.env');

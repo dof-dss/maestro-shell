@@ -16,5 +16,4 @@ interface HostingInterface {
    *   Symfony style instance.
    */
   public function build(SymfonyStyle $io);
-
 }
