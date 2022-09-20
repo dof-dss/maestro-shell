@@ -7,9 +7,9 @@ use Maestro\Hosting;
 use Maestro\HostingInterface;
 
 /**
- * Provides generic hosting setup and configuration.
+ * Provides common hosting setup and configuration.
  */
-class Unity extends Hosting implements HostingInterface {
+class Generic extends Hosting implements HostingInterface {
 
   /**
    * {@inheritdoc}

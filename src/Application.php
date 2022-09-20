@@ -58,6 +58,9 @@ class Application extends ParentApplication {
       $this->container = new ContainerBuilder();
       $loader = new YamlFileLoader($this->container, new FileLocator());
       $loader->load(Utils::shellRoot() . '/services.yml');
+    }
+
+    if (file_exists(Utils::projectRoot() . '/maestro.yml')) {
       $loader->load(Utils::projectRoot() . '/maestro.yml');
     }
 
