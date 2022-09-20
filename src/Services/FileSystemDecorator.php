@@ -1,11 +1,11 @@
 <?php
 
-namespace UnityShell\Services;
+namespace Maestro\Services;
 
 use DrupalFinder\DrupalFinder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
-use UnityShell\Utils;
+use Maestro\Utils;
 
 /**
  * Decorator for the symfony FileSystem component.
@@ -16,8 +16,8 @@ use UnityShell\Utils;
  * See: https://symfony.com/doc/current/components/filesystem.html
  *
  * By default, paths passed to these methods will be prefixed with the current
- * Unity project root path. If you require an absolute path you should start
- * the path with a double slash (e.g. //app/project/sites).
+ * project root path. If you require an absolute path you should start the path
+ * with a double slash (e.g. //app/project/sites).
  */
 class FileSystemDecorator {
 

@@ -7,7 +7,7 @@
 
 if (class_exists('Phar')) {
   Phar::mapPhar('default.phar');
-  require 'phar://' . __FILE__ . '/build/unitysh';
+  require 'phar://' . __FILE__ . '/build/maestro';
 }
 
 __HALT_COMPILER(); ?>

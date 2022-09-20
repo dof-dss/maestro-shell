@@ -3,21 +3,6 @@ services:
     autowire: true
     autoconfigure: true
     public: false
-  unityshell.filesystem:
-    class: 'UnityShell\Services\FileSystemDecorator'
-# The hosting providers defined below will generate configuration when
-# project:build is executed.
-# Each provider requires a directory under .hosting in unity_base with
-# the appropriate resources.
-  hosting.platformSH:
-    class: 'UnityShell\Services\Hosting\PlatformSH'
-    tags:
-      - { name: unity.hosting }
-  hosting.lando:
-    class: 'UnityShell\Services\Hosting\Lando'
-    tags:
-      - { name: unity.hosting }
-  hosting.generic:
-    class: 'UnityShell\Services\Hosting\Generic'
-    tags:
-      - { name: unity.hosting }
+  maestro.filesystem:
+    class: 'Maestro\Services\FileSystemDecorator'
+

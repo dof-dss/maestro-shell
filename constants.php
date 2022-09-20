@@ -5,4 +5,4 @@
  * Unity Shell constants.
  */
 
-const UNITYSHELL_ROOT = __DIR__;
+const PROJECT_ROOT = __DIR__;

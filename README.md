@@ -1,6 +1,6 @@
-# Unity Shell
+# Maestro
 
-Unity Shell is a command line tool to manage Unity2 projects and sites.
+Maestro is a command line tool to manage multi-site projects.
 
 # Requirements
 - A computer
@@ -47,8 +47,8 @@ From the unity_shell repository run:
 composer install
 ```
 
-To allow use of the Unity Shell command from any Unity2 fork without having to 
-directly reference the Unity Shell 
+To allow use of the Maestro command from any Unity2 fork without having to 
+directly reference Maestro 
 executable I recommend adding the repository binary directory to your shell 
 $PATH.  
 As an example I'm using zsh which is the default shell for MacOS 

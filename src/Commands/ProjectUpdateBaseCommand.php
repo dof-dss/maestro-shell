@@ -1,6 +1,6 @@
 <?php
 
-namespace UnityShell\Commands;
+namespace Maestro\Commands;
 
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -8,10 +8,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
-use UnityShell\Utils;
+use Maestro\Utils;
 
 /**
- * Command to update the project with changes from Unity_base.
+ * Command to update the project with changes from the base repository.
  */
 class ProjectUpdateBaseCommand extends Command {
 
@@ -20,7 +20,7 @@ class ProjectUpdateBaseCommand extends Command {
    */
   protected function configure(): void {
     $this->setName('project:update-base');
-    $this->setDescription('Update the project with the latest changes to Unity Base');
+    $this->setDescription('Update the project with the latest changes from the base repository');
     $this->setAliases(['pub']);
   }
 

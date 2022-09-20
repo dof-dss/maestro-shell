@@ -1,10 +1,10 @@
 <?php
 
-namespace UnityShell\Services\Hosting;
+namespace Maestro\Services\Hosting;
 
-use UnityShell\Hosting;
-use UnityShell\HostingInterface;
-use UnityShell\Utils;
+use Maestro\Hosting;
+use Maestro\HostingInterface;
+use Maestro\Utils;
 
 /**
  * Provides hosting setup and configuration for Lando.
@@ -38,7 +38,7 @@ class Lando extends Hosting implements HostingInterface {
       }
     }
 
-    // Copy the base Unity configuration for Lando.
+    // Copy the base configuration for Lando.
     $io->writeln("Creating Lando base configuration file.");
     $this->fs()->copy('/.hosting/Lando/templates/.lando.base.yml', '/.lando.base.yml');
 

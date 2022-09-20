@@ -1,13 +1,13 @@
 <?php
 
-namespace UnityShell\Models;
+namespace Maestro\Models;
 
 use RomaricDrigon\MetaYaml\Loader\YamlLoader;
 use RomaricDrigon\MetaYaml\MetaYaml;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
-use UnityShell\Services\FileSystemDecorator;
-use UnityShell\Utils;
+use Maestro\Services\FileSystemDecorator;
+use Maestro\Utils;
 
 /**
  * Provides methods for managing a Unity Project definition file.
@@ -24,7 +24,7 @@ class Project {
   /**
    * The FileSystemDecorator.
    *
-   * @var \UnityShell\Services\FileSystemDecorator
+   * @var \Maestro\Services\FileSystemDecorator
    */
   private FileSystemDecorator $fs;
 
@@ -35,10 +35,10 @@ class Project {
     $this->fs = new FileSystemDecorator(new Filesystem());
 
     if (!$this->fs()->exists('/project/project.yml')) {
-      throw new FileNotFoundException("Unity project file not found.");
+      throw new FileNotFoundException("Project file not found.");
     }
 
-    // Load the Unity Project file.
+    // Load the Project file.
     $project = $this->fs()->readFile('/project/project.yml');
 
     try {
@@ -128,7 +128,7 @@ class Project {
   protected function validate(array $project_data) {
     // Validate Project file.
     $yaml_loader = new YamlLoader();
-    $schema_data = $yaml_loader->loadFromFile(Utils::shellRoot() . '/resources/schemas/unity_project.yml');
+    $schema_data = $yaml_loader->loadFromFile(Utils::shellRoot() . '/resources/schemas/maestro_project.yml');
     $schema = new MetaYaml($schema_data);
 
     try {

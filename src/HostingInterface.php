@@ -1,6 +1,6 @@
 <?php
 
-namespace UnityShell;
+namespace Maestro;
 
 use Symfony\Component\Console\Style\SymfonyStyle;
 

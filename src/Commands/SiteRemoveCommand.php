@@ -1,6 +1,6 @@
 <?php
 
-namespace UnityShell\Commands;
+namespace Maestro\Commands;
 
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -10,7 +10,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
 /**
- * Command to remove a site to a Unity2 project.
+ * Command to remove a site to a Maestro project.
  */
 class SiteRemoveCommand extends Command {
 

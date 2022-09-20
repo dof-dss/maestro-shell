@@ -1,13 +1,13 @@
 <?php
 
-namespace UnityShell;
+namespace Maestro;
 
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use UnityShell\Models\Project;
-use UnityShell\Services\FileSystemDecorator;
+use Maestro\Models\Project;
+use Maestro\Services\FileSystemDecorator;
 
 /**
  * Base class for hosting services.
@@ -31,7 +31,7 @@ abstract class Hosting {
   /**
    * The project definition.
    *
-   * @var \UnityShell\Models\Project
+   * @var \Maestro\Models\Project
    */
   protected $project;
 
@@ -45,7 +45,7 @@ abstract class Hosting {
   /**
    * The FileSystemDecorator.
    *
-   * @var \UnityShell\Services\FileSystemDecorator
+   * @var \Maestro\Services\FileSystemDecorator
    */
   private FileSystemDecorator $fs;
 
@@ -66,10 +66,11 @@ abstract class Hosting {
     $loader = new YamlFileLoader($this->container, new FileLocator());
     $loader->load(Utils::shellRoot() . '/services.yml');
 
-    $this->fs = $this->container->get('unityshell.filesystem');
+    $this->fs = $this->container->get('maestro.filesystem');
     $this->project = new Project();
 
-    // Enable if the hosting service has the required directory in Unity Base.
+    // Enable if the hosting service has the required directory configuration
+    // directory in the project root directory.
     $this->isEnabled = $this->fs()->exists('/.hosting/' . $this->name());
   }
 
@@ -140,7 +141,7 @@ abstract class Hosting {
   /**
    * The project definition.
    *
-   * @return \UnityShell\Models\Project
+   * @return \Maestro\Models\Project
    *   Current project definition.
    */
   protected function project() {

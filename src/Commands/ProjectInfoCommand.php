@@ -1,6 +1,6 @@
 <?php
 
-namespace UnityShell\Commands;
+namespace Maestro\Commands;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -8,7 +8,7 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Command to display information about a Unity2 project.
+ * Command to display information about a Maestro project.
  */
 class ProjectInfoCommand extends Command {
 

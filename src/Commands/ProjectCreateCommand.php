@@ -1,6 +1,6 @@
 <?php
 
-namespace UnityShell\Commands;
+namespace Maestro\Commands;
 
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -10,7 +10,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 /**
- * Command to create a Unity2 project.
+ * Command to create a Maestro project.
  */
 class ProjectCreateCommand extends Command {
 
@@ -19,7 +19,7 @@ class ProjectCreateCommand extends Command {
    */
   protected function configure(): void {
     $this->setName('project:create');
-    $this->setDescription('Create a new Unity project');
+    $this->setDescription('Create a new project');
     $this->setAliases(['pc']);
 
     $this->addArgument('name', InputArgument::OPTIONAL, 'Project name');

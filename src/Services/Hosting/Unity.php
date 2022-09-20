@@ -1,15 +1,15 @@
 <?php
 
-namespace UnityShell\Services\Hosting;
+namespace Maestro\Services\Hosting;
 
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-use UnityShell\Hosting;
-use UnityShell\HostingInterface;
+use Maestro\Hosting;
+use Maestro\HostingInterface;
 
 /**
  * Provides generic hosting setup and configuration.
  */
-class Generic extends Hosting implements HostingInterface {
+class Unity extends Hosting implements HostingInterface {
 
   /**
    * {@inheritdoc}

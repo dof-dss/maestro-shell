@@ -1,11 +1,11 @@
 <?php
 
-namespace UnityShell;
+namespace Maestro;
 
 use DrupalFinder\DrupalFinder;
 
 /**
- * Unity Shell Utilities.
+ * Maestro Shell Utilities.
  */
 class Utils {
 
@@ -23,17 +23,17 @@ class Utils {
   }
 
   /**
-   * System path to the Unity Shell application.
+   * System path to the Maestro Shell application.
    *
    * @return string
-   *   System path for Unity Shell.
+   *   System path for Maestro Shell.
    */
   public static function shellRoot() {
-    return UNITYSHELL_ROOT;
+    return PROJECT_ROOT;
   }
 
   /**
-   * System path to the Unity project.
+   * System path to the project.
    *
    * @return bool|string
    *   System path or False for not found.

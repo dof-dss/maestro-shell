@@ -1,13 +1,13 @@
 <?php
 
-namespace UnityShell\Commands;
+namespace Maestro\Commands;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Command to build a Unity2 project.
+ * Command to build a Maestro project.
  */
 class ProjectBuildCommand extends Command {
 
@@ -48,7 +48,7 @@ class ProjectBuildCommand extends Command {
     }
 
     // Retrieve each hosting service and if enabled, execute its build.
-    $hosting_service_ids = $this->container()->findTaggedServiceIds('unity.hosting');
+    $hosting_service_ids = $this->container()->findTaggedServiceIds('maestro.hosting');
 
     if (!empty($hosting_service_ids)) {
       $io->title('## Hosting setup ##');

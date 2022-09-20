@@ -1,11 +1,11 @@
 <?php
 
-namespace UnityShell\Services\Hosting;
+namespace Maestro\Services\Hosting;
 
 use Symfony\Component\Yaml\Tag\TaggedValue;
-use UnityShell\Hosting;
-use UnityShell\HostingInterface;
-use UnityShell\Utils;
+use Maestro\Hosting;
+use Maestro\HostingInterface;
+use Maestro\Utils;
 
 /**
  * Provides hosting setup and configuration for PlatformSH.

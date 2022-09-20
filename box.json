@@ -25,7 +25,7 @@
       ]
     }
   ],
-  "output": "build/unitysh.phar",
+  "output": "build/maestro.phar",
   "compactors": [
     "KevinGH\\Box\\Compactor\\Json",
     "KevinGH\\Box\\Compactor\\Php"

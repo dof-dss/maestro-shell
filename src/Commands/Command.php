@@ -1,15 +1,15 @@
 <?php
 
-namespace UnityShell\Commands;
+namespace Maestro\Commands;
 
 use Symfony\Component\Console\Command\Command as ConsoleCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use UnityShell\Models\Project;
-use UnityShell\Services\FileSystemDecorator;
+use Maestro\Models\Project;
+use Maestro\Services\FileSystemDecorator;
 
 /**
- * Base class form building Unity Shell commands.
+ * Base class form building Maestro Shell commands.
  */
 abstract class Command extends ConsoleCommand {
 
@@ -29,19 +29,19 @@ abstract class Command extends ConsoleCommand {
   ];
 
   /**
-   * The Unity project definition.
+   * The Maestro project definition.
    */
   protected Project $project;
 
   /**
    * The FileSystemDecorator.
    *
-   * @var \UnityShell\Services\FileSystemDecorator
+   * @var \Maestro\Services\FileSystemDecorator
    */
   private FileSystemDecorator $fs;
 
   /**
-   * Initialize common configuration for all Unity Shell commands.
+   * Initialize common configuration for all Maestro Shell commands.
    *
    * @inheritdoc
    */
@@ -54,8 +54,8 @@ abstract class Command extends ConsoleCommand {
   /**
    * Project getter.
    *
-   * @return \UnityShell\Models\Project
-   *   Current Unity site project definition.
+   * @return \Maestro\Models\Project
+   *   Current Project definition.
    */
   public function project() {
     return $this->project;
@@ -64,12 +64,12 @@ abstract class Command extends ConsoleCommand {
   /**
    * FileSystemDecorator getter.
    *
-   * @return \UnityShell\Services\FileSystemDecorator
+   * @return \Maestro\Services\FileSystemDecorator
    *   The FileSystemDecorator.
    */
   public function fs() {
     if (empty($this->fs)) {
-      $this->fs = $this->container()->get('unityshell.filesystem');
+      $this->fs = $this->container()->get('Maestro.filesystem');
     }
     return $this->fs;
   }
