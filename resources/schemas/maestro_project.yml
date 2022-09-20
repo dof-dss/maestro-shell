@@ -9,6 +9,10 @@ root:
       _type: text
       _not_empty: true
       _required: true
+    project_type:
+      _type: text
+      _not_empty: true
+      _required: true
     sites:
       _type: prototype
       _prototype:

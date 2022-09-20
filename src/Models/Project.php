@@ -160,6 +160,16 @@ class Project {
   }
 
   /**
+   * Project type.
+   *
+   * @return string|null
+   *   The project type.
+   */
+  public function type() {
+    return $this->project['project_type'];
+  }
+
+  /**
    * Sites for the project.
    *
    * @return array
