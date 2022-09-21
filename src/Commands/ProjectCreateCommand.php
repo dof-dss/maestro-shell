@@ -2,12 +2,15 @@
 
 namespace Maestro\Commands;
 
+use League\Flysystem\FilesystemException;
+use Maestro\Context;
+use Maestro\Filesystem\FilesystemManager;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Command to create a Maestro project.
@@ -41,6 +44,9 @@ class ProjectCreateCommand extends Command {
    */
   protected function execute(InputInterface $input, OutputInterface $output): int {
     $io = new SymfonyStyle($input, $output);
+    $fs = FilesystemManager::fs(Context::Project);
+
+    $fs->write('test.txt', 'foo');
 
     $project_name = $input->getArgument('name');
 
@@ -62,18 +68,18 @@ class ProjectCreateCommand extends Command {
       }
     }
 
-    if (!$this->fs()->exists('/project')) {
-      $this->fs()->mkdir('/project');
-      $this->fs()->mkdir('/project/config');
-      $this->fs()->mkdir('/project/sites');
-      $io->info('Creating project directory.');
+    if (!$fs->directoryExists('project')) {
+      $fs->createDirectory('project');
+      $fs->createDirectory('project/config');
+      $fs->createDirectory('project/sites');
+      $io->note('Creating project directory.');
     }
 
     $project['project_name'] = $project_name;
     $project['project_id'] = $project_id;
 
     try {
-      $this->fs()->dumpFile('/project/project.yml', $project);
+      $fs->write('project/project.yml', Yaml::dump($project, 6));
       $io->success('Created project file');
 
       if ($io->confirm('Would you like to add a site to the project?')) {
@@ -84,8 +90,8 @@ class ProjectCreateCommand extends Command {
       }
       return Command::SUCCESS;
     }
-    catch (IOExceptionInterface $exception) {
-      $io->error('Unable to create Project file, error: ' . $exception->getMessage());
+    catch (FilesystemException $e) {
+      $io->error('Unable to create Project file, error: ' . $e->getMessage());
       return Command::FAILURE;
     }
   }

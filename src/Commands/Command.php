@@ -2,10 +2,13 @@
 
 namespace Maestro\Commands;
 
+use League\Flysystem\Filesystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use Symfony\Component\Console\Command\Command as ConsoleCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Maestro\Models\Project;
+use Maestro\Utils;
 use Maestro\Services\FileSystemDecorator;
 
 /**
@@ -34,13 +37,6 @@ abstract class Command extends ConsoleCommand {
   protected Project $project;
 
   /**
-   * The FileSystemDecorator.
-   *
-   * @var \Maestro\Services\FileSystemDecorator
-   */
-  private FileSystemDecorator $fs;
-
-  /**
    * Initialize common configuration for all Maestro Shell commands.
    *
    * @inheritdoc
@@ -59,19 +55,6 @@ abstract class Command extends ConsoleCommand {
    */
   public function project() {
     return $this->project;
-  }
-
-  /**
-   * FileSystemDecorator getter.
-   *
-   * @return \Maestro\Services\FileSystemDecorator
-   *   The FileSystemDecorator.
-   */
-  public function fs() {
-    if (empty($this->fs)) {
-      $this->fs = $this->container()->get('Maestro.filesystem');
-    }
-    return $this->fs;
   }
 
   /**
