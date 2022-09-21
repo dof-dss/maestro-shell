@@ -3,6 +3,5 @@ services:
     autowire: true
     autoconfigure: true
     public: false
-  maestro.filesystem:
-    class: 'Maestro\Services\FileSystemDecorator'
+
 

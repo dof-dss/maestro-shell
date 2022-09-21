@@ -2,7 +2,7 @@
 
 namespace Maestro;
 
-use DrupalFinder\DrupalFinder;
+use Maestro\Filesystem\FilesystemManager;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -26,28 +26,6 @@ class Utils {
   }
 
   /**
-   * System path to the Maestro Shell application.
-   *
-   * @return string
-   *   System path for Maestro Shell.
-   */
-  public static function shellRoot() {
-    return MAESTRO_ROOT;
-  }
-
-  /**
-   * System path to the project.
-   *
-   * @return bool|string
-   *   System path or False for not found.
-   */
-  public static function projectRoot() {
-    $drupalFinder = new DrupalFinder();
-    $drupalFinder->locateRoot(getcwd());
-    return $drupalFinder->getComposerRoot();
-  }
-
-  /**
    * Return an instance of the DI container.
    *
    * @return bool|string
@@ -56,10 +34,12 @@ class Utils {
   public static function container() {
     $container = new ContainerBuilder();
     $loader = new YamlFileLoader($container, new FileLocator());
-    $loader->load(self::shellRoot() . '/services.yml');
+    $loader->load(FilesystemManager::rootPath(Context::Maestro) . '/services.yml');
 
-    if (file_exists(self::projectRoot() . '/maestro.yml')) {
-      $loader->load(self::projectRoot() . '/maestro.yml');
+    $project_root = FilesystemManager::rootPath(Context::Project);
+
+    if (!empty($project_root) && file_exists($project_root. '/maestro.yml')) {
+      $loader->load($project_root . '/maestro.yml');
     }
     return $container;
   }
