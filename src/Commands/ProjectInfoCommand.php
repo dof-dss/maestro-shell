@@ -38,21 +38,24 @@ class ProjectInfoCommand extends Command {
     $io = new SymfonyStyle($input, $output);
     $rows = [];
 
-    foreach ($this->project()->sites() as $site) {
-      $rows[] = [
-        $site['name'],
-        $site['url'],
-        $site['database'],
-        (empty($site['solr'])) ? 'No' : 'Yes',
-        $site['status'],
-      ];
-    }
+    $io->title($this->project()->name() . ' (' . $this->project()->id() . ') - ' . count($this->project()->sites() ?? []) . " site(s)");
 
-    $io->title($this->project()->name() . ' (' . $this->project()->id() . ') - ' . count($this->project()->sites()) . " site(s)");
-    $table = new Table($output);
-    $table->setHeaders(['Name', 'URL', 'Database', 'Solr', 'Status'])
-      ->setRows($rows)
-      ->render();
+    if ($this->project()->sites()) {
+      foreach ($this->project()->sites() as $site) {
+        $rows[] = [
+          $site['name'],
+          $site['url'],
+          $site['database'],
+          (empty($site['solr'])) ? 'No' : 'Yes',
+          $site['status'],
+        ];
+      }
+
+      $table = new Table($output);
+      $table->setHeaders(['Name', 'URL', 'Database', 'Solr', 'Status'])
+        ->setRows($rows)
+        ->render();
+    }
 
     return Command::SUCCESS;
   }
