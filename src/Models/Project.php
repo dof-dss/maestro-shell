@@ -2,12 +2,13 @@
 
 namespace Maestro\Models;
 
+use League\Flysystem\Filesystem;
+use Maestro\Context;
+use Maestro\Filesystem\FilesystemManager;
 use RomaricDrigon\MetaYaml\Loader\YamlLoader;
 use RomaricDrigon\MetaYaml\MetaYaml;
-use Symfony\Component\Filesystem\Exception\FileNotFoundException;
-use Symfony\Component\Filesystem\Filesystem;
-use Maestro\Services\FileSystemDecorator;
 use Maestro\Utils;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Provides methods for managing a Unity Project definition file.
@@ -22,24 +23,24 @@ class Project {
   protected array $project;
 
   /**
-   * The FileSystemDecorator.
+   * The Filesystem.
    *
-   * @var \Maestro\Services\FileSystemDecorator
+   * @var \League\Flysystem\Filesystem
    */
-  private FileSystemDecorator $fs;
+  private Filesystem $fs;
 
   /**
    * Project constructor.
    */
   public function __construct() {
-    $this->fs = new FileSystemDecorator(new Filesystem());
+    $this->fs = FilesystemManager::fs(Context::Project);
 
-    if (!$this->fs()->exists('/project/project.yml')) {
-      throw new FileNotFoundException("Project file not found.");
+    if (!$this->fs()->fileExists('project/project.yml')) {
+      throw new \Exception("Project file not found.");
     }
 
     // Load the Project file.
-    $project = $this->fs()->readFile('/project/project.yml');
+    $project = Yaml::parse($this->fs()->read('project/project.yml'));
 
     try {
       $this->validate($project);
@@ -56,7 +57,7 @@ class Project {
   public function save() {
     try {
       $this->validate($this->project);
-      $this->fs()->dumpFile('/project/project.yml', $this->project);
+      $this->fs()->write('project/project.yml', Yaml::dump($this->project, 6));
     }
     catch (\Exception $exception) {
       throwException($exception);
@@ -128,7 +129,7 @@ class Project {
   protected function validate(array $project_data) {
     // Validate Project file.
     $yaml_loader = new YamlLoader();
-    $schema_data = $yaml_loader->loadFromFile(Utils::shellRoot() . '/resources/schemas/maestro_project.yml');
+    $schema_data = $yaml_loader->loadFromFile(FilesystemManager::rootPath(Context::Maestro) . '/resources/schemas/maestro_project.yml');
     $schema = new MetaYaml($schema_data);
 
     try {
@@ -176,7 +177,7 @@ class Project {
    *   Array of project sites.
    */
   public function sites() {
-    return $this->project['sites'];
+    return $this->project['sites'] ?? NULL;
   }
 
   /**
@@ -194,10 +195,10 @@ class Project {
   }
 
   /**
-   * FileSystemDecorator getter.
+   * Filesystem getter.
    *
-   * @return \UnityShell\Services\FileSystemDecorator
-   *   The FileSystemDecorator.
+   * @return \League\Flysystem\Filesystem
+   *   The Filesystem instance.
    */
   public function fs() {
     return $this->fs;
