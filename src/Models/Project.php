@@ -177,7 +177,7 @@ class Project {
    *   Array of project sites.
    */
   public function sites() {
-    return $this->project['sites'] ?? NULL;
+    return $this->project['sites'] ?? 0;
   }
 
   /**
