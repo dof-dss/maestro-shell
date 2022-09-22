@@ -1,11 +1,11 @@
 <?php
 
-namespace Maestro\Filesystem;
+namespace Maestro\Shell\Filesystem;
 
 use DrupalFinder\DrupalFinder;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Local\LocalFilesystemAdapter;
-use Maestro\Context;
+use Maestro\Shell\Context;
 
 /**
  * Provides filesystem handling.
@@ -15,10 +15,10 @@ class FilesystemManager {
   /**
    * Filesystem for the provided context.
    *
-   * @param \Maestro\Context $context
+   * @param \Maestro\Shell\Context $context
    *   Context to return filesystem for.
    *
-   * @return \League\Flysystem\Filesystem
+   * @return Filesystem
    *   Filesystem for the context.
    */
   public static function fs(Context $context) {
@@ -32,7 +32,7 @@ class FilesystemManager {
   /**
    * Absolute system path to the provided context.
    *
-   * @param \Maestro\Context $context
+   * @param \Maestro\Shell\Context $context
    *   Context to return path for.
    *
    * @return string

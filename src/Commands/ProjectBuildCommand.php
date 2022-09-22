@@ -1,9 +1,9 @@
 <?php
 
-namespace Maestro\Commands;
+namespace Maestro\Shell\Commands;
 
-use Maestro\Context;
-use Maestro\Filesystem\FilesystemManager;
+use Maestro\Shell\Context;
+use Maestro\Shell\Filesystem\FilesystemManager;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -63,11 +63,11 @@ class ProjectBuildCommand extends Command {
       $io->title('## Hosting setup ##');
 
       foreach ($hosting_service_ids as $service_id => $data) {
+        /** @var \Maestro\Core\HostingInterface $service */
         $service = $this->container()->get($service_id);
-        if ($service->isEnabled()) {
-          $service->build($io, $fs);
-          $this->instructions = array_merge($this->instructions, $service->instructions());
-        }
+
+        $service->build($io, $fs);
+        $this->instructions = array_merge($this->instructions, $service->instructions());
       }
     }
 

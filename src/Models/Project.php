@@ -1,11 +1,11 @@
 <?php
 
-namespace Maestro\Models;
+namespace Maestro\Shell\Models;
 
 use League\Flysystem\Filesystem;
-use Maestro\Context;
-use Maestro\Filesystem\FilesystemManager;
-use Maestro\ProjectInterface;
+use Maestro\Shell\Context;
+use Maestro\Core\ProjectInterface;
+use Maestro\Shell\Filesystem\FilesystemManager;
 use RomaricDrigon\MetaYaml\Loader\YamlLoader;
 use RomaricDrigon\MetaYaml\MetaYaml;
 use Symfony\Component\Yaml\Yaml;
@@ -38,7 +38,7 @@ class Project implements ProjectInterface {
     if (!$this->fs()->fileExists('project/project.yml')) {
       throw new \Exception("Project file not found.");
     }
-
+    
     // Load the Project file.
     $project = Yaml::parse($this->fs()->read('project/project.yml'));
 

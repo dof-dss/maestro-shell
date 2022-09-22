@@ -1,6 +1,6 @@
 <?php
 
-namespace Maestro;
+namespace Maestro\Shell;
 
 enum Context {
   case Maestro;

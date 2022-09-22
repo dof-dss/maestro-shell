@@ -1,14 +1,14 @@
 <?php
 
-namespace Maestro;
+namespace Maestro\Shell;
 
-use Maestro\Commands\ProjectBuildCommand;
-use Maestro\Commands\ProjectCreateCommand;
-use Maestro\Commands\ProjectInfoCommand;
-use Maestro\Commands\ProjectUpdateBaseCommand;
-use Maestro\Commands\SiteAddCommand;
-use Maestro\Commands\SiteEditCommand;
-use Maestro\Commands\SiteRemoveCommand;
+use Maestro\Shell\Commands\ProjectBuildCommand;
+use Maestro\Shell\Commands\ProjectCreateCommand;
+use Maestro\Shell\Commands\ProjectInfoCommand;
+use Maestro\Shell\Commands\ProjectUpdateBaseCommand;
+use Maestro\Shell\Commands\SiteAddCommand;
+use Maestro\Shell\Commands\SiteEditCommand;
+use Maestro\Shell\Commands\SiteRemoveCommand;
 use Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand;
 use Symfony\Component\Console\Application as ParentApplication;
 
@@ -42,20 +42,6 @@ class Application extends ParentApplication {
       new SiteEditCommand(),
       new SiteRemoveCommand(),
     ]);
-  }
-
-  /**
-   * Returns the DI container.
-   *
-   * @return \Symfony\Component\DependencyInjection\ContainerBuilder
-   *   Dependency Injection container.
-   */
-  public function container() {
-    if (!isset($this->container)) {
-      $this->container = Utils::container();
-    }
-
-    return $this->container;
   }
 
 }

@@ -31,4 +31,4 @@ if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
     exit(1);
 }
 
-(new \Maestro\Application())->run();
+(new \Maestro\Shell\Application())->run();

@@ -1,8 +1,8 @@
 <?php
 
-namespace Maestro\Commands;
+namespace Maestro\Shell\Commands;
 
-use Maestro\Models\Project;
+use Maestro\Shell\Models\Project;
 use Symfony\Component\Console\Command\Command as ConsoleCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -46,7 +46,7 @@ abstract class Command extends ConsoleCommand {
   /**
    * Project getter.
    *
-   * @return \Maestro\Models\Project
+   * @return \Maestro\Shell\Models\Project
    *   Current Project definition.
    */
   public function project() {

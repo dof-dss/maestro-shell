@@ -1,10 +1,10 @@
 <?php
 
-namespace Maestro\Commands;
+namespace Maestro\Shell\Commands;
 
 use League\Flysystem\FilesystemException;
-use Maestro\Context;
-use Maestro\Filesystem\FilesystemManager;
+use Maestro\Shell\Context;
+use Maestro\Shell\Filesystem\FilesystemManager;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

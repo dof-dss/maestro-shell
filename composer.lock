@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34d35ef99b88f7f1b93e96ce5e8f5659",
+    "content-hash": "a7e46838824fbae4e8cef25c614b4739",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -180,6 +180,43 @@
                 }
             ],
             "time": "2022-05-20T20:06:54+00:00"
+        },
+        {
+            "name": "dof-dss/maestro-core",
+            "version": "0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dof-dss/maestro-core.git",
+                "reference": "fa1bf41bb5e0e187175643ad241df46bf0643b59"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dof-dss/maestro-core/zipball/fa1bf41bb5e0e187175643ad241df46bf0643b59",
+                "reference": "fa1bf41bb5e0e187175643ad241df46bf0643b59",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Maestro\\Core\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "OMAHM",
+                    "email": "hello@onemanandhismouse.com"
+                }
+            ],
+            "description": "Maestro core composition project",
+            "support": {
+                "issues": "https://github.com/dof-dss/maestro-core/issues",
+                "source": "https://github.com/dof-dss/maestro-core/tree/0.0.3"
+            },
+            "time": "2022-09-22T20:00:16+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

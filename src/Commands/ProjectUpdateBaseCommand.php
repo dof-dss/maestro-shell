@@ -1,6 +1,6 @@
 <?php
 
-namespace Maestro\Commands;
+namespace Maestro\Shell\Commands;
 
 use Maestro\Utils;
 use Symfony\Component\Console\Input\ArrayInput;
