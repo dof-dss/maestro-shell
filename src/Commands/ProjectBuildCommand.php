@@ -2,6 +2,8 @@
 
 namespace Maestro\Commands;
 
+use Maestro\Context;
+use Maestro\Filesystem\FilesystemManager;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -40,6 +42,7 @@ class ProjectBuildCommand extends Command {
    */
   protected function execute(InputInterface $input, OutputInterface $output): int {
     $io = new SymfonyStyle($input, $output);
+    $fs = FilesystemManager::fs(Context::Project);
 
     // Warn if we don't have a project file.
     if (empty($this->project()->sites())) {
@@ -48,7 +51,7 @@ class ProjectBuildCommand extends Command {
     }
 
     // Check we have the required hosting package.
-    if (!$this->fs()->exists('vendor/dof-dss/maestro-hosting')) {
+    if (!$fs->fileExists('vendor/dof-dss/maestro-hosting')) {
       $io->warning("Required package 'dof-dss/maestro-hosting' is not installed. You will not be able to generate hosting configuration for this project.");
       return Command::FAILURE;
     }
@@ -62,7 +65,7 @@ class ProjectBuildCommand extends Command {
       foreach ($hosting_service_ids as $service_id => $data) {
         $service = $this->container()->get($service_id);
         if ($service->isEnabled()) {
-          $service->build($io);
+          $service->build($io, $fs);
           $this->instructions = array_merge($this->instructions, $service->instructions());
         }
       }

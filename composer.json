@@ -1,6 +1,6 @@
 {
-  "name": "dof-dss/maestro",
-  "description": "Maestro: NICS Drupal multi-server, multi-site command shell.",
+  "name": "dof-dss/maestro-shell",
+  "description": "Shell for working with Maestro projects.",
   "license": "MIT",
   "repositories": [
     {

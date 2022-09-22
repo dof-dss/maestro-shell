@@ -5,15 +5,15 @@ namespace Maestro\Models;
 use League\Flysystem\Filesystem;
 use Maestro\Context;
 use Maestro\Filesystem\FilesystemManager;
+use Maestro\ProjectInterface;
 use RomaricDrigon\MetaYaml\Loader\YamlLoader;
 use RomaricDrigon\MetaYaml\MetaYaml;
-use Maestro\Utils;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Provides methods for managing a Unity Project definition file.
+ * Implementation of Maestro Project Interface.
  */
-class Project {
+class Project implements ProjectInterface {
 
   /**
    * The project definition.
@@ -52,7 +52,7 @@ class Project {
   }
 
   /**
-   * Save the project.
+   * {@inheritdoc}
    */
   public function save() {
     try {
@@ -65,12 +65,7 @@ class Project {
   }
 
   /**
-   * Add a site to the project.
-   *
-   * @param string $site_id
-   *   Site identifier.
-   * @param array $site_data
-   *   Site configuration data.
+   * {@inheritdoc}
    */
   public function addSite(string $site_id, array $site_data) {
     // @todo Validate site data.
@@ -83,12 +78,7 @@ class Project {
   }
 
   /**
-   * Update a site within the project.
-   *
-   * @param string $site_id
-   *   Site identifier.
-   * @param array $site_data
-   *   Site configuration data.
+   * {@inheritdoc}
    */
   public function updateSite(string $site_id, array $site_data) {
     // @todo Validate site data.
@@ -101,10 +91,7 @@ class Project {
   }
 
   /**
-   * Remove a site from the project.
-   *
-   * @param string $site_id
-   *   Site identifier.
+   * {@inheritdoc}
    */
   public function removeSite(string $site_id) {
     if (!$this->siteExists($site_id)) {
@@ -141,50 +128,35 @@ class Project {
   }
 
   /**
-   * Project name.
-   *
-   * @return string|null
-   *   The project name.
+   * {@inheritdoc}
    */
   public function name() {
     return $this->project['project_name'];
   }
 
   /**
-   * Project ID.
-   *
-   * @return string|null
-   *   The project ID.
+   * {@inheritdoc}
    */
   public function id() {
     return $this->project['project_id'];
   }
 
   /**
-   * Project type.
-   *
-   * @return string|null
-   *   The project type.
+   * {@inheritdoc}
    */
   public function type() {
     return $this->project['project_type'];
   }
 
   /**
-   * Sites for the project.
-   *
-   * @return array
-   *   Array of project sites.
+   * {@inheritdoc}
    */
   public function sites() {
     return $this->project['sites'] ?? 0;
   }
 
   /**
-   * Determine if a site exists in the Project.
-   *
-   * @return bool
-   *   True if site exists, otherwise false.
+   * {@inheritdoc}
    */
   public function siteExists($site_id) {
     if (!array_key_exists('sites', $this->project)) {

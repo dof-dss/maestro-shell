@@ -2,13 +2,13 @@
 
 namespace Maestro\Commands;
 
+use Maestro\Utils;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
-use Maestro\Utils;
 
 /**
  * Command to update the project with changes from the base repository.

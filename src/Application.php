@@ -2,15 +2,15 @@
 
 namespace Maestro;
 
-use Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand;
-use Symfony\Component\Console\Application as ParentApplication;
-use Maestro\Commands\ProjectUpdateBaseCommand;
 use Maestro\Commands\ProjectBuildCommand;
 use Maestro\Commands\ProjectCreateCommand;
 use Maestro\Commands\ProjectInfoCommand;
+use Maestro\Commands\ProjectUpdateBaseCommand;
 use Maestro\Commands\SiteAddCommand;
 use Maestro\Commands\SiteEditCommand;
 use Maestro\Commands\SiteRemoveCommand;
+use Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand;
+use Symfony\Component\Console\Application as ParentApplication;
 
 /**
  * Maestro Shell Application.

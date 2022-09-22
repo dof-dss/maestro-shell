@@ -2,14 +2,10 @@
 
 namespace Maestro\Commands;
 
-use League\Flysystem\Filesystem;
-use League\Flysystem\Local\LocalFilesystemAdapter;
+use Maestro\Models\Project;
 use Symfony\Component\Console\Command\Command as ConsoleCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Maestro\Models\Project;
-use Maestro\Utils;
-use Maestro\Services\FileSystemDecorator;
 
 /**
  * Base class form building Maestro Shell commands.
