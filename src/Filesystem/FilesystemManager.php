@@ -48,4 +48,29 @@ class FilesystemManager {
     return MAESTRO_ROOT;
   }
 
+  /**
+   * Convert arrays to ini file format.
+   *
+   * @param array $data
+   *   Array of data to be written.
+   * @param int $i
+   *   Ini file index.
+   *
+   * @return string
+   *   string of ini format data.
+   */
+  public static function arrayToIni(array $data, $i = 0) {
+    $str = "";
+    foreach ($data as $key => $val) {
+      if (is_array($val)) {
+        $str .= str_repeat(" ", $i * 2) . "[$key]" . PHP_EOL;
+        $str .= self::arrayToIni($val, $i + 1);
+      }
+      else {
+        $str .= str_repeat(" ", $i * 2) . "$key = $val" . PHP_EOL;
+      }
+    }
+    return $str;
+  }
+
 }
