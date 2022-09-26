@@ -10,7 +10,7 @@
   ],
   "require": {
     "symfony/console": "^4.2",
-    "symfony/finder": "^3.0",
+    "symfony/finder": "^4.2",
     "symfony/filesystem": "^4.2",
     "symfony/process": "^4.2",
     "stecman/symfony-console-completion": "^0.11",
