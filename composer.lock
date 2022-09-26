@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0986559c5738d0ecb10a4830204f9860",
+    "content-hash": "8d7a1fe2a4e31c5711d10127771be15c",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -220,6 +220,46 @@
                 "source": "https://github.com/dof-dss/maestro-core/tree/0.0.6"
             },
             "time": "2022-09-26T14:16:00+00:00"
+        },
+        {
+            "name": "dof-dss/maestro-hosting",
+            "version": "0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dof-dss/maestro-hosting.git",
+                "reference": "d0c8871b658622b56d6df25dd5c9c8f75d96413d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dof-dss/maestro-hosting/zipball/d0c8871b658622b56d6df25dd5c9c8f75d96413d",
+                "reference": "d0c8871b658622b56d6df25dd5c9c8f75d96413d",
+                "shasum": ""
+            },
+            "require": {
+                "dof-dss/maestro-core": "^0.0.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Maestro\\Hosting\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "OMAHM",
+                    "email": "hello@onemanandhismouse.com"
+                }
+            ],
+            "description": "Maestro hosting resources",
+            "support": {
+                "issues": "https://github.com/dof-dss/maestro-hosting/issues",
+                "source": "https://github.com/dof-dss/maestro-hosting/tree/0.0.3"
+            },
+            "time": "2022-09-26T14:35:30+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

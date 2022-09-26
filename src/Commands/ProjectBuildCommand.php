@@ -2,7 +2,7 @@
 
 namespace Maestro\Shell\Commands;
 
-use Maestro\Shell\Context;
+use Maestro\Core\Context;
 use Maestro\Shell\Filesystem\FilesystemManager;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -51,18 +51,21 @@ class ProjectBuildCommand extends Command {
     }
 
     // Check we have the required hosting package.
-    if (!$fs->fileExists('vendor/dof-dss/maestro-hosting')) {
-      $io->warning("Required package 'dof-dss/maestro-hosting' is not installed. You will not be able to generate hosting configuration for this project.");
-      return Command::FAILURE;
-    }
+//    if (!$fs->exists('/vendor/dof-dss/maestro-hosting')) {
+//      $io->warning("Required package 'dof-dss/maestro-hosting' is not installed. You will not be able to generate hosting configuration for this project.");
+//      return Command::FAILURE;
+//    }
 
     // Retrieve each hosting service and if enabled, execute its build.
     $hosting_service_ids = $this->container()->findTaggedServiceIds('maestro.hosting');
 
+
+//
     if (!empty($hosting_service_ids)) {
       $io->title('## Hosting setup ##');
 
       foreach ($hosting_service_ids as $service_id => $data) {
+        var_dump($data);
         /** @var \Maestro\Core\HostingInterface $service */
         $service = $this->container()->get($service_id);
 

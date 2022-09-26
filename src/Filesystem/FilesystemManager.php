@@ -4,7 +4,7 @@ namespace Maestro\Shell\Filesystem;
 
 use DrupalFinder\DrupalFinder;
 use Maestro\Core\Context;
-use Maestro\Core\Filesystem\Filesystem;
+use Maestro\Shell\Filesystem\Filesystem;
 
 /**
  * Provides filesystem handling.
