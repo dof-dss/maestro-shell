@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d62930fcef37d3f81401ab772ba1b93c",
+    "content-hash": "0986559c5738d0ecb10a4830204f9860",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -183,17 +183,20 @@
         },
         {
             "name": "dof-dss/maestro-core",
-            "version": "0.0.3",
+            "version": "0.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dof-dss/maestro-core.git",
-                "reference": "fa1bf41bb5e0e187175643ad241df46bf0643b59"
+                "reference": "eaf5fd0ded7d35f18719cd7ae915a700a1943963"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dof-dss/maestro-core/zipball/fa1bf41bb5e0e187175643ad241df46bf0643b59",
-                "reference": "fa1bf41bb5e0e187175643ad241df46bf0643b59",
+                "url": "https://api.github.com/repos/dof-dss/maestro-core/zipball/eaf5fd0ded7d35f18719cd7ae915a700a1943963",
+                "reference": "eaf5fd0ded7d35f18719cd7ae915a700a1943963",
                 "shasum": ""
+            },
+            "require": {
+                "symfony/filesystem": "^4.2"
             },
             "type": "library",
             "autoload": {
@@ -214,9 +217,9 @@
             "description": "Maestro core composition project",
             "support": {
                 "issues": "https://github.com/dof-dss/maestro-core/issues",
-                "source": "https://github.com/dof-dss/maestro-core/tree/0.0.3"
+                "source": "https://github.com/dof-dss/maestro-core/tree/0.0.6"
             },
-            "time": "2022-09-22T20:00:16+00:00"
+            "time": "2022-09-26T14:16:00+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1570,21 +1573,22 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.4.47",
+            "version": "v4.4.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "e58d7841cddfed6e846829040dca2cca0ebbbbb3"
+                "reference": "815412ee8971209bd4c1eecd5f4f481eacd44bf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/e58d7841cddfed6e846829040dca2cca0ebbbbb3",
-                "reference": "e58d7841cddfed6e846829040dca2cca0ebbbbb3",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/815412ee8971209bd4c1eecd5f4f481eacd44bf5",
+                "reference": "815412ee8971209bd4c1eecd5f4f481eacd44bf5",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8",
-                "symfony/polyfill-ctype": "~1.8"
+                "php": ">=7.1.3",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-php80": "^1.16"
             },
             "type": "library",
             "autoload": {
@@ -1609,10 +1613,10 @@
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
-            "description": "Symfony Filesystem Component",
+            "description": "Provides basic utilities for the filesystem",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/v3.4.47"
+                "source": "https://github.com/symfony/filesystem/tree/v4.4.42"
             },
             "funding": [
                 {
@@ -1628,7 +1632,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T10:57:07+00:00"
+            "time": "2022-05-20T08:49:14+00:00"
         },
         {
             "name": "symfony/finder",

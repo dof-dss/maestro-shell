@@ -2,13 +2,12 @@
 
 namespace Maestro\Shell\Models;
 
-use Maestro\Core\Filesystem;
-use Maestro\Shell\Context;
+use Maestro\Core\Context;
+use Maestro\Core\Filesystem\Filesystem;
 use Maestro\Core\ProjectInterface;
 use Maestro\Shell\Filesystem\FilesystemManager;
 use RomaricDrigon\MetaYaml\Loader\YamlLoader;
 use RomaricDrigon\MetaYaml\MetaYaml;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Implementation of Maestro Project Interface.
@@ -25,7 +24,7 @@ class Project implements ProjectInterface {
   /**
    * The Filesystem.
    *
-   * @var \Maestro\Core\Filesystem
+   * @var \Maestro\Core\Filesystem\Filesystem
    */
   private Filesystem $fs;
 
@@ -35,12 +34,12 @@ class Project implements ProjectInterface {
   public function __construct() {
     $this->fs = FilesystemManager::fs(Context::Project);
 
-    if (!$this->fs()->exists('project/project.yml')) {
+    if (!$this->fs()->exists('/project/project.yml')) {
       throw new \Exception("Project file not found.");
     }
-    
+
     // Load the Project file.
-    $project = Yaml::parse($this->fs()->read('project/project.yml'));
+    $project = $this->fs()->read('/project/project.yml');
 
     try {
       $this->validate($project);
@@ -57,7 +56,7 @@ class Project implements ProjectInterface {
   public function save() {
     try {
       $this->validate($this->project);
-      $this->fs()->write('project/project.yml', Yaml::dump($this->project, 6));
+      $this->fs()->write('/project/project.yml', $this->project);
     }
     catch (\Exception $exception) {
       throwException($exception);
