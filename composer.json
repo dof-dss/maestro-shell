@@ -25,7 +25,6 @@
     "webflo/drupal-finder": "^1.2",
     "romaricdrigon/metayaml": "dev-master",
     "symfony/yaml": "^4.2",
-    "league/flysystem": "^3.5",
     "dof-dss/maestro-core": "^0.0.3"
   },
   "suggest": {

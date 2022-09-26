@@ -2,7 +2,7 @@
 
 namespace Maestro\Shell\Models;
 
-use League\Flysystem\Filesystem;
+use Maestro\Core\Filesystem;
 use Maestro\Shell\Context;
 use Maestro\Core\ProjectInterface;
 use Maestro\Shell\Filesystem\FilesystemManager;
@@ -25,7 +25,7 @@ class Project implements ProjectInterface {
   /**
    * The Filesystem.
    *
-   * @var \League\Flysystem\Filesystem
+   * @var \Maestro\Core\Filesystem
    */
   private Filesystem $fs;
 
@@ -35,7 +35,7 @@ class Project implements ProjectInterface {
   public function __construct() {
     $this->fs = FilesystemManager::fs(Context::Project);
 
-    if (!$this->fs()->fileExists('project/project.yml')) {
+    if (!$this->fs()->exists('project/project.yml')) {
       throw new \Exception("Project file not found.");
     }
     
@@ -169,7 +169,7 @@ class Project implements ProjectInterface {
   /**
    * Filesystem getter.
    *
-   * @return \League\Flysystem\Filesystem
+   * @return \Maestro\Core\Filesystem
    *   The Filesystem instance.
    */
   public function fs() {
