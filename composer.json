@@ -21,9 +21,8 @@
     "composer/ca-bundle": "^1.3",
     "romaricdrigon/metayaml": "dev-master",
     "symfony/yaml": "^4.2",
-    "dof-dss/maestro-core": "^0.0.6",
-    "webflo/drupal-finder": "^1.2",
-    "dof-dss/maestro-hosting": "^0.0.3"
+    "dof-dss/maestro-core": "^0.0.7",
+    "webflo/drupal-finder": "^1.2"
   },
   "suggest": {
     "drush/drush": "For Drupal projects"

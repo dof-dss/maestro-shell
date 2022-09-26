@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c2deb29daaf004f94165290ec871707d",
+    "content-hash": "24a30084a439ae16edc9e02878f99374",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -84,20 +84,17 @@
         },
         {
             "name": "dof-dss/maestro-core",
-            "version": "0.0.6",
+            "version": "0.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dof-dss/maestro-core.git",
-                "reference": "eaf5fd0ded7d35f18719cd7ae915a700a1943963"
+                "reference": "5238015c7639cc4ff76fa274e0d7ac218f659ea9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dof-dss/maestro-core/zipball/eaf5fd0ded7d35f18719cd7ae915a700a1943963",
-                "reference": "eaf5fd0ded7d35f18719cd7ae915a700a1943963",
+                "url": "https://api.github.com/repos/dof-dss/maestro-core/zipball/5238015c7639cc4ff76fa274e0d7ac218f659ea9",
+                "reference": "5238015c7639cc4ff76fa274e0d7ac218f659ea9",
                 "shasum": ""
-            },
-            "require": {
-                "symfony/filesystem": "^4.2"
             },
             "type": "library",
             "autoload": {
@@ -118,49 +115,9 @@
             "description": "Maestro core composition project",
             "support": {
                 "issues": "https://github.com/dof-dss/maestro-core/issues",
-                "source": "https://github.com/dof-dss/maestro-core/tree/0.0.6"
+                "source": "https://github.com/dof-dss/maestro-core/tree/0.0.7"
             },
-            "time": "2022-09-26T14:16:00+00:00"
-        },
-        {
-            "name": "dof-dss/maestro-hosting",
-            "version": "0.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dof-dss/maestro-hosting.git",
-                "reference": "d0c8871b658622b56d6df25dd5c9c8f75d96413d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dof-dss/maestro-hosting/zipball/d0c8871b658622b56d6df25dd5c9c8f75d96413d",
-                "reference": "d0c8871b658622b56d6df25dd5c9c8f75d96413d",
-                "shasum": ""
-            },
-            "require": {
-                "dof-dss/maestro-core": "^0.0.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Maestro\\Hosting\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "OMAHM",
-                    "email": "hello@onemanandhismouse.com"
-                }
-            ],
-            "description": "Maestro hosting resources",
-            "support": {
-                "issues": "https://github.com/dof-dss/maestro-hosting/issues",
-                "source": "https://github.com/dof-dss/maestro-hosting/tree/0.0.3"
-            },
-            "time": "2022-09-26T14:35:30+00:00"
+            "time": "2022-09-26T18:47:34+00:00"
         },
         {
             "name": "psr/container",
