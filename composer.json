@@ -9,13 +9,10 @@
     }
   ],
   "require": {
-    "doctrine/cache": "~1.5",
-    "guzzlehttp/guzzle": "^7.0",
-    "guzzlehttp/ringphp": "^1.1",
     "symfony/console": "^4.2",
     "symfony/finder": "^3.0",
     "symfony/filesystem": "^4.2",
-    "symfony/process": "^3.0 >=3.4",
+    "symfony/process": "^4.2",
     "stecman/symfony-console-completion": "^0.11",
     "symfony/event-dispatcher": "^4.2",
     "symfony/dependency-injection": "^4.2",
@@ -39,18 +36,12 @@
       "Maestro\\Shell\\": "src"
     }
   },
-  "require-dev": {
-    "bamarni/composer-bin-plugin": "^1.2"
-  },
   "bin": [
     "bin/maestro"
   ],
   "config": {
     "platform": {
       "php": "8.1"
-    },
-    "allow-plugins": {
-      "bamarni/composer-bin-plugin": true
     }
   }
 }
