@@ -2,7 +2,9 @@
 
 namespace Maestro\Shell\Commands;
 
-use Maestro\Utils;
+use Maestro\Core\Context;
+use Maestro\Core\Utils;
+use Maestro\Shell\Filesystem\FilesystemManager;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -45,7 +47,7 @@ class ProjectUpdateBaseCommand extends Command {
     $commands[] = "git pull --no-rebase upstream main";
 
     $process = new Process(implode(' && ', $commands));
-    $process->setWorkingDirectory(Utils::projectRoot());
+    $process->setWorkingDirectory(FilesystemManager::rootPath(Context::Project));
     $process->run();
 
     if (!$process->isSuccessful()) {
@@ -56,7 +58,7 @@ class ProjectUpdateBaseCommand extends Command {
         $commands[] = "git remote set-url --push upstream no-push";
 
         $process = new Process(implode(' && ', $commands));
-        $process->setWorkingDirectory(Utils::projectRoot());
+        $process->setWorkingDirectory(FilesystemManager::rootPath(Context::Project));
         $process->run();
 
         if (!$process->isSuccessful()) {
