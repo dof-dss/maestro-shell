@@ -95,11 +95,17 @@ class Filesystem implements FilesystemInterface {
     $path = $this->fullPath($path);
     $destination = $this->fullPath($destination);
 
-    if ($this->isDir($path)) {
-      $this->fs->mirror($path, $destination);
-    } else {
-      $this->fs->copy($path, $destination);
-    }
+    $this->fs->copy($path, $destination);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function copyDirectory($path, $destination) {
+    $path = $this->fullPath($path);
+    $destination = $this->fullPath($destination);
+
+    $this->fs->mirror($path, $destination);
   }
 
   /**
@@ -114,13 +120,6 @@ class Filesystem implements FilesystemInterface {
    */
   public function link($source, $link) {
     $this->fs->symlink($this->fullPath($source), $this->fullPath($link));
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function isDir($path){
-    return is_dir($this->fullPath($path));
   }
 
   /**

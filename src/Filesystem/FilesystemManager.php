@@ -4,7 +4,7 @@ namespace Maestro\Shell\Filesystem;
 
 use DrupalFinder\DrupalFinder;
 use Maestro\Core\Context;
-use Maestro\Shell\Filesystem\Filesystem;
+use Maestro\Core\FilesystemInterface;
 
 /**
  * Provides filesystem handling.
@@ -17,7 +17,7 @@ class FilesystemManager {
    * @param \Maestro\Core\Context $context
    *   Context to return filesystem for.
    *
-   * @return \Maestro\Core\Filesystem\Filesystem
+   * @return \Maestro\Core\FilesystemInterface
    *   Filesystem for the context.
    */
   public static function fs(Context $context) {

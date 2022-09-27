@@ -55,15 +55,12 @@ class Application extends ParentApplication {
   public function container() {
     $fs = FilesystemManager::fs(Context::Project);
 
-//    if ($fs->exists('/maestro.yml')) {
+    if ($fs->exists('/maestro.yml')) {
       $path = FilesystemManager::rootPath(Context::Project) . '/maestro.yml';
       $this->container = new ContainerBuilder();
       $loader = new YamlFileLoader($this->container, new FileLocator());
       $loader->load($path);
-//    }
-
-//    $this->container = new ContainerBuilder();
-//    $this->container->register("maestro.common", "Maestro\Hosting\Provider\Common");
+    }
 
     return $this->container;
   }

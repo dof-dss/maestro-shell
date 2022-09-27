@@ -3,7 +3,7 @@
 namespace Maestro\Shell\Models;
 
 use Maestro\Core\Context;
-use Maestro\Core\Filesystem\Filesystem;
+use Maestro\Core\FilesystemInterface;
 use Maestro\Core\ProjectInterface;
 use Maestro\Shell\Filesystem\FilesystemManager;
 use RomaricDrigon\MetaYaml\Loader\YamlLoader;
@@ -24,9 +24,9 @@ class Project implements ProjectInterface {
   /**
    * The Filesystem.
    *
-   * @var \Maestro\Core\Filesystem\Filesystem
+   * @var \Maestro\Core\FilesystemInterface
    */
-  private Filesystem $fs;
+  private FilesystemInterface $fs;
 
   /**
    * Project constructor.
