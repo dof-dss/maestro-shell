@@ -144,6 +144,11 @@ class Filesystem implements FilesystemInterface {
     if (str_starts_with($path, '//')) {
       return substr($path, 1, strlen($path));
     }
+    
+    // Prefix dir slash if missing.
+    if (!str_starts_with($path, '/')) {
+      $path = '/' . $path;
+    }
 
     return $this->rootPath . $path;
   }
