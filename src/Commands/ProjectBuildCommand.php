@@ -56,6 +56,12 @@ class ProjectBuildCommand extends Command {
       return Command::FAILURE;
     }
 
+    // Check we have the required maestro file.
+    if (!$fs->exists('/maestro.yml')) {
+      $io->warning("Required maestro.yml file is missing from the project.");
+      return Command::FAILURE;
+    }
+
     // Retrieve each hosting service and if enabled, execute its build.
     $hosting_service_ids = $this->container()->findTaggedServiceIds('maestro.hosting');
 
