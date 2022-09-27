@@ -2,15 +2,13 @@
 
 namespace Maestro\Shell\Commands;
 
-use League\Flysystem\FilesystemException;
-use Maestro\Shell\Context;
+use Maestro\Core\Context;
 use Maestro\Shell\Filesystem\FilesystemManager;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Command to create a Maestro project.
@@ -46,8 +44,6 @@ class ProjectCreateCommand extends Command {
     $io = new SymfonyStyle($input, $output);
     $fs = FilesystemManager::fs(Context::Project);
 
-    $fs->write('test.txt', 'foo');
-
     $project_name = $input->getArgument('name');
 
     if (empty($project_name)) {
@@ -68,32 +64,31 @@ class ProjectCreateCommand extends Command {
       }
     }
 
-    if (!$fs->directoryExists('project')) {
-      $fs->createDirectory('project');
-      $fs->createDirectory('project/config');
-      $fs->createDirectory('project/sites');
+    if (!$fs->exists('/project')) {
+      $fs->createDirectory('/project');
+      $fs->createDirectory('/project/config');
+      $fs->createDirectory('/project/sites');
       $io->note('Creating project directory.');
     }
 
     $project['project_name'] = $project_name;
     $project['project_id'] = $project_id;
 
-    try {
-      $fs->write('project/project.yml', Yaml::dump($project, 6));
-      $io->success('Created project file');
+    $fs->write('/project/project.yml', $project);
+    $io->success('Created project file');
 
-      if ($io->confirm('Would you like to add a site to the project?')) {
-        $build_command = $this->getApplication()->find('site:add');
+    if (!$fs->exists('/maestro.yml')) {
+      $fs->copy('/vendor/dof-dss/maestro-shell/resources/maestro_template.yml', '/maestro.yml');
+      $io->success('Created maestro file');
+    }
 
-        $return_code = $build_command->run(new ArrayInput([]), $output);
-        return $return_code;
-      }
-      return Command::SUCCESS;
+    if ($io->confirm('Would you like to add a site to the project?')) {
+      $build_command = $this->getApplication()->find('site:add');
+
+      $return_code = $build_command->run(new ArrayInput([]), $output);
+      return $return_code;
     }
-    catch (FilesystemException $e) {
-      $io->error('Unable to create Project file, error: ' . $e->getMessage());
-      return Command::FAILURE;
-    }
+    return Command::SUCCESS;
   }
 
 }
