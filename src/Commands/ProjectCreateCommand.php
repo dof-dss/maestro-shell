@@ -44,6 +44,11 @@ class ProjectCreateCommand extends Command {
     $io = new SymfonyStyle($input, $output);
     $fs = FilesystemManager::fs(Context::Project);
 
+    if ($fs->exists('/project/project.yml')) {
+      $io->error('A project definition already exists.');
+      return Command::FAILURE;
+    }
+
     $project_name = $input->getArgument('name');
 
     if (empty($project_name)) {
