@@ -48,11 +48,12 @@ class ProjectInfoCommand extends Command {
           $site['database'],
           (empty($site['solr'])) ? 'No' : 'Yes',
           $site['status'],
+          ($site['default']) ? 'Yes' : 'No',
         ];
       }
 
       $table = new Table($output);
-      $table->setHeaders(['Name', 'URL', 'Database', 'Solr', 'Status'])
+      $table->setHeaders(['Name', 'URL', 'Database', 'Solr', 'Status', 'Default'])
         ->setRows($rows)
         ->render();
     }
