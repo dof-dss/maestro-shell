@@ -74,6 +74,7 @@ class SiteAddCommand extends Command {
 
     $site_status = $helper->ask($input, $output, $site_status_list);
     $site['status'] = $site_status;
+    $site['default'] = false;
 
     $this->project()->addSite($site_id, $site);
 

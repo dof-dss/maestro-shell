@@ -48,3 +48,7 @@ root:
              _values:
               - development
               - production
+          default:
+            _type: boolean
+            _not_empty: true
+            _required: true
