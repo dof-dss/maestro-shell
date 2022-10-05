@@ -151,7 +151,7 @@ class Project implements ProjectInterface {
    * {@inheritdoc}
    */
   public function sites() {
-    return $this->project['sites'] ?? 0;
+    return $this->project['sites'] ?? [];
   }
 
   /**
