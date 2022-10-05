@@ -8,6 +8,7 @@ use Maestro\Shell\Commands\ProjectCreateCommand;
 use Maestro\Shell\Commands\ProjectInfoCommand;
 use Maestro\Shell\Commands\ProjectUpdateBaseCommand;
 use Maestro\Shell\Commands\SiteAddCommand;
+use Maestro\Shell\Commands\SiteDefaultCommand;
 use Maestro\Shell\Commands\SiteEditCommand;
 use Maestro\Shell\Commands\SiteRemoveCommand;
 use Maestro\Shell\Filesystem\FilesystemManager;
@@ -44,6 +45,7 @@ class Application extends ParentApplication {
       new ProjectCreateCommand(),
       new ProjectInfoCommand(),
       new SiteAddCommand(),
+      new SiteDefaultCommand(),
       new SiteEditCommand(),
       new SiteRemoveCommand(),
     ]);

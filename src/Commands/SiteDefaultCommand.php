@@ -60,7 +60,6 @@ class SiteDefaultCommand extends Command {
       $site_id = $helper->ask($input, $output, $sites_choice_list);
 
       if ($site_id === 'Cancel') {
-        $io->info('Cancelling site edit.');
         return Command::SUCCESS;
       }
     }
