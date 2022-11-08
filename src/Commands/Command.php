@@ -2,6 +2,8 @@
 
 namespace Maestro\Shell\Commands;
 
+use Maestro\Core\Context;
+use Maestro\Shell\Filesystem\FilesystemManager;
 use Maestro\Shell\Models\Project;
 use Symfony\Component\Console\Command\Command as ConsoleCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -38,6 +40,25 @@ abstract class Command extends ConsoleCommand {
    * @inheritdoc
    */
   protected function initialize(InputInterface $input, OutputInterface $output) {
+
+    $fs = FilesystemManager::fs(Context::Project);
+
+    $maestro_packages = [
+      'dof-dss/maestro-shell' => '',
+      'dof-dss/maestro-hosting' => '',
+    ];
+
+    // Determine the current version of the maestro packages from the project
+    // composer file. We cannot use Composer's runtime utils here as that runs
+    // within the context of the maestro shell composer.
+    $project_composer = json_decode($fs->read('composer.lock'));
+
+    foreach ($project_composer->{'packages-dev'} as $package) {
+      if (array_key_exists($package->name, $maestro_packages)) {
+        $maestro_packages[$package->name] = $package->version;
+      }
+    }
+
     if ($this->getName() !== 'project:create') {
       $this->project = new Project();
     }
