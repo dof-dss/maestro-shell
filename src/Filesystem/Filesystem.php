@@ -11,6 +11,21 @@ use Symfony\Component\Yaml\Yaml;
 class Filesystem implements FilesystemInterface {
 
   /**
+   * Warning text to prepend to template files.
+   *
+   * @var string
+   */
+  protected $warning_text = <<<EOD
+    #############################################################################
+    ###                           --== IMPORTANT ==--                         ###
+    #############################################################################
+    # If you require changes to this file you must edit the file within the     #
+    # original repository.Any changes here will be overwritten when the project #
+    # is built.                                                                 #
+    #############################################################################
+    EOD;
+
+  /**
    * The root path.
    *
    * @var string
@@ -67,7 +82,7 @@ class Filesystem implements FilesystemInterface {
   /**
    * {@inheritdoc}
    */
-  public function write($path, $content) {
+  public function write($path, $content, $add_warning=FALSE) {
     $path = $this->fullPath($path);
 
     if (str_ends_with($path, '.env')) {
@@ -76,6 +91,10 @@ class Filesystem implements FilesystemInterface {
 
     if (str_ends_with($path, '.yml') || str_ends_with($path, '.yaml')) {
       $content = Yaml::dump($content, 6);
+    }
+
+    if ($add_warning) {
+      $content = $this->warning_text . $content;
     }
 
     $this->fs->dumpFile($path, $content);
