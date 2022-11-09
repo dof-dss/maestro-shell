@@ -43,6 +43,7 @@ abstract class Command extends ConsoleCommand {
    * @inheritdoc
    */
   protected function initialize(InputInterface $input, OutputInterface $output) {
+    $io = new SymfonyStyle($input, $output);
     $cache = new FilesystemAdapter();
 
     $maestro_packages = $cache->get('maestro.packages', function (ItemInterface $item) {
@@ -72,9 +73,19 @@ abstract class Command extends ConsoleCommand {
       return $maestro_packages;
     });
 
+    $updates_available = [];
+
     foreach ($maestro_packages as $package => $versions) {
       if ($versions['latest'] != $versions['installed']) {
-        $output->writeln('There are updates available for ' . $package . ' (' . $versions['latest'] . ')');
+        $updates_available[] = $package;
+      }
+    }
+
+    if (count($updates_available) > 0) {
+      $output->writeln('<fg=magenta>' . $this::UPDATES . '</>');
+
+      foreach ($updates_available as $update) {
+        $io->writeln('<fg=cyan>Update available for ' . $update . ' (</><fg=red>' . $maestro_packages[$update]['installed'] . '</><fg=cyan> ==> </><fg=green>' . $maestro_packages[$update]['latest'] . '</><fg=cyan>)</>');
       }
     }
 
