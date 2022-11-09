@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Contracts\Cache\ItemInterface;
 
 /**
  * Base class form building Maestro Shell commands.
@@ -42,14 +43,12 @@ abstract class Command extends ConsoleCommand {
    * @inheritdoc
    */
   protected function initialize(InputInterface $input, OutputInterface $output) {
-
     $cache = new FilesystemAdapter();
 
-    $maestro_packages_cache = $cache->getItem('maestro.packages');
-    if (!$maestro_packages_cache->isHit()) {
-
+    $maestro_packages = $cache->get('maestro.packages', function (ItemInterface $item) {
       $fs = FilesystemManager::fs(Context::Project);
       $client = HttpClient::create();
+      $item->expiresAt(new \DateTime('tomorrow'));
 
       $maestro_packages = [
         'dof-dss/maestro-shell' => [],
@@ -67,19 +66,15 @@ abstract class Command extends ConsoleCommand {
       foreach ($maestro_packages as $package => $versions) {
         $response = $client->request('GET', "https://repo.packagist.org/p2/$package.json");
         $package_data = json_decode($response->getContent());
-
         $maestro_packages[$package]['latest'] = $package_data->packages->$package[0]->version;
       }
 
-      $maestro_packages_cache->set($maestro_packages);
-      $maestro_packages_cache->expiresAt(new \DateTime('tomorrow'));
-    } else {
-      $maestro_packages = $maestro_packages_cache->get();
+      return $maestro_packages;
+    });
 
-      foreach ($maestro_packages as $package => $versions) {
-        if ($versions['latest'] == $versions['installed']) {
-          $output->writeln('There are updates available for ' . $package . ' (' . $versions['latest'] . ')');
-        }
+    foreach ($maestro_packages as $package => $versions) {
+      if ($versions['latest'] != $versions['installed']) {
+        $output->writeln('There are updates available for ' . $package . ' (' . $versions['latest'] . ')');
       }
     }
 
