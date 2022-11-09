@@ -8,6 +8,7 @@ use Maestro\Shell\Models\Project;
 use Symfony\Component\Console\Command\Command as ConsoleCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -33,6 +34,18 @@ abstract class Command extends ConsoleCommand {
   ];
 
   /**
+   * Updates text banner.
+   */
+  protected const UPDATES = <<<EOD
+
+     /\ /\ _ __   __| | __ _| |_ ___  ___    __ ___   ____ _(_) | __ _| |__ | | ___  / \
+    / / \ \ '_ \ / _` |/ _` | __/ _ \/ __|  / _` \ \ / / _` | | |/ _` | '_ \| |/ _ \/  /
+    \ \_/ / |_) | (_| | (_| | ||  __/\__ \ | (_| |\ V / (_| | | | (_| | |_) | |  __/\_/
+     \___/| .__/ \__,_|\__,_|\__\___||___/  \__,_| \_/ \__,_|_|_|\__,_|_.__/|_|\___\/
+          |_|
+  EOD;
+
+  /**
    * The Maestro project definition.
    */
   protected Project $project;
@@ -46,6 +59,7 @@ abstract class Command extends ConsoleCommand {
     $io = new SymfonyStyle($input, $output);
     $cache = new FilesystemAdapter();
 
+    // Fetch Maestro package version info for installed and latest releases.
     $maestro_packages = $cache->get('maestro.packages', function (ItemInterface $item) {
       $fs = FilesystemManager::fs(Context::Project);
       $client = HttpClient::create();
@@ -56,6 +70,7 @@ abstract class Command extends ConsoleCommand {
         'dof-dss/maestro-hosting' => [],
       ];
 
+      // Fetch local composer for package version info.
       $project_composer = json_decode($fs->read('composer.lock'));
 
       foreach ($project_composer->{'packages-dev'} as $package) {
@@ -64,6 +79,7 @@ abstract class Command extends ConsoleCommand {
         }
       }
 
+      // Query Packagist for package version info.
       foreach ($maestro_packages as $package => $versions) {
         $response = $client->request('GET', "https://repo.packagist.org/p2/$package.json");
         $package_data = json_decode($response->getContent());
@@ -73,8 +89,8 @@ abstract class Command extends ConsoleCommand {
       return $maestro_packages;
     });
 
+    // Display banner and info to the user if updates are available.
     $updates_available = [];
-
     foreach ($maestro_packages as $package => $versions) {
       if ($versions['latest'] != $versions['installed']) {
         $updates_available[] = $package;
@@ -89,6 +105,7 @@ abstract class Command extends ConsoleCommand {
       }
     }
 
+    // If this isn't a new project, load the project file.
     if ($this->getName() !== 'project:create') {
       $this->project = new Project();
     }
