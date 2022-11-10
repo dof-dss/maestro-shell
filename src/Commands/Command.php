@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter as CacheFilesystemAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
 
 /**
@@ -57,7 +57,7 @@ abstract class Command extends ConsoleCommand {
    */
   protected function initialize(InputInterface $input, OutputInterface $output) {
     $io = new SymfonyStyle($input, $output);
-    $cache = new FilesystemAdapter();
+    $cache = new CacheFilesystemAdapter();
 
     // Fetch Maestro package version info for installed and latest releases.
     $maestro_packages = $cache->get('maestro.packages', function (ItemInterface $item) {
