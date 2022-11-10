@@ -38,7 +38,7 @@ class ProjectInfoCommand extends Command {
     $io = new SymfonyStyle($input, $output);
     $rows = [];
 
-    $io->title($this->project()->name() . ' (' . $this->project()->id() . ') - ' . count($this->project()->sites()) . " site(s)");
+    $io->title($this->project()->name() . ' (' . $this->project()->id() . ') - ' . count($this->project()->sites()) . ' ' . $this->project()->type() . ' site(s)');
 
     if ($this->project()->sites()) {
       foreach ($this->project()->sites() as $site) {

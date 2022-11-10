@@ -15,6 +15,8 @@ class ComposerEventListener {
 
     $package = method_exists($operation, 'getPackage') ? $operation->getPackage() : $operation->getInitialPackage();
 
+    // Clear the maestro package versions cache to prevent cached banner display
+    // after packages have been updated.
     if (in_array($package->getName(), ['dof-dss/maestro-shell', 'dof-dss/maestro-hosting'])) {
       $cache = new CacheFilesystemAdapter();
       $cache->delete('maestro.packages');
