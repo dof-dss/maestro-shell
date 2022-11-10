@@ -7,6 +7,19 @@ Maestro is a command line tool to manage multi-site projects.
 - PHP 8+ CLI
 - Composer 2.1+
 
+### Drupal composer file requirements
+
+You must ensure the following script is included in the project composer file
+when using Maestro Shell.
+
+```json
+"scripts": {
+        "post-package-update": [
+            "Maestro\\Shell\\Events\\ComposerEventListener::postPackageUpdate"
+        ]
+    }
+```
+
 ### PHP
 
 To see which version of PHP you have installed, from the Mac shell run: 
