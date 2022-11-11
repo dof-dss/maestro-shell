@@ -60,7 +60,8 @@ abstract class Command extends ConsoleCommand {
     $cache = new CacheFilesystemAdapter();
 
     // Fetch Maestro package version info for installed and latest releases.
-    $maestro_packages = $cache->get('maestro.packages', function (ItemInterface $item) {
+    // Warn if the Maestro event script isn't present in composer.json.
+    $maestro_packages = $cache->get('maestro.packages', function (ItemInterface $item) use ($io) {
       $fs = FilesystemManager::fs(Context::Project);
       $client = HttpClient::create();
       $item->expiresAt(new \DateTime('tomorrow'));
@@ -71,9 +72,9 @@ abstract class Command extends ConsoleCommand {
       ];
 
       // Fetch local composer for package version info.
-      $project_composer = json_decode($fs->read('composer.lock'));
+      $composer_lock = json_decode($fs->read('composer.lock'));
 
-      foreach ($project_composer->{'packages-dev'} as $package) {
+      foreach ($composer_lock->{'packages-dev'} as $package) {
         if (array_key_exists($package->name, $maestro_packages)) {
           $maestro_packages[$package->name]['installed'] = $package->version;
         }
@@ -84,6 +85,22 @@ abstract class Command extends ConsoleCommand {
         $response = $client->request('GET', "https://repo.packagist.org/p2/$package.json");
         $package_data = json_decode($response->getContent());
         $maestro_packages[$package]['latest'] = $package_data->packages->$package[0]->version;
+      }
+
+      // Fetch composer.
+      $composer_json = json_decode($fs->read('composer.json'));
+      $composer_script_present = FALSE;
+
+      // Check if the Maestro shell event handler has been added to the composer
+      // scripts section.
+      if (property_exists($composer_json, 'scripts') && property_exists($composer_json->scripts, 'post-package-update')) {
+        if (in_array('Maestro\Shell\Events\ComposerEventListener::postPackageUpdate', $composer_json->scripts->{'post-package-update'})) {
+          $composer_script_present = TRUE;
+        }
+      }
+
+      if (!$composer_script_present) {
+        $io->error('Maestro shell script missing from the project composer file. Please see the Maestro shell readme and update composer.json');
       }
 
       return $maestro_packages;
