@@ -72,7 +72,7 @@ abstract class Command extends ConsoleCommand {
       ];
 
       // Fetch local composer for package version info.
-      $composer_lock = json_decode($fs->read('composer.lock'));
+      $composer_lock = $fs->read('composer.lock');
 
       foreach ($composer_lock->{'packages-dev'} as $package) {
         if (array_key_exists($package->name, $maestro_packages)) {
@@ -88,7 +88,7 @@ abstract class Command extends ConsoleCommand {
       }
 
       // Fetch composer.
-      $composer_json = json_decode($fs->read('composer.json'));
+      $composer_json = $fs->read('composer.json');
       $composer_script_present = FALSE;
 
       // Check if the Maestro shell event handler has been added to the composer
