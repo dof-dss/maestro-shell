@@ -1,24 +1,9 @@
 # Maestro
-
 Maestro is a command line tool to manage multi-site projects.
 
-# Requirements
-- A computer
-- PHP 8+ CLI
+## Requirements
+- PHP 8.1+ CLI
 - Composer 2.1+
-
-### Drupal composer file requirements
-
-You must ensure the following script is included in the project composer file
-when using Maestro Shell.
-
-```json
-"scripts": {
-        "post-package-update": [
-            "Maestro\\Shell\\Events\\ComposerEventListener::postPackageUpdate"
-        ]
-    }
-```
 
 ### PHP
 
@@ -48,35 +33,25 @@ If you do have Composer installed run:
 composer self-update
 ```
 
-# Installing
+## Installing
 
-First clone this repository locally (See Unity2 Confluence document for 
-recommended Unity2 directory structure).
+Add the Maestro shell and hosting packages to your project dev dependencies
+
 ```shell
-git clone https://github.com/dof-dss/unity_shell.git
-```
-From the unity_shell repository run:
-```shell
-composer install
+composer require --dev dof-dss/maestro-shell dof-dss/maestro-hosting 
 ```
 
-To allow use of the Maestro command from any Unity2 fork without having to 
-directly reference Maestro 
-executable I recommend adding the repository binary directory to your shell 
-$PATH.  
-As an example I'm using zsh which is the default shell for MacOS 
+To allow use of the Maestro command from the root directory of your project 
+without having to directly reference the Maestro executable 
+(e.g. vendor/bin/maestro) I recommend adding the vendor/bin directory to your 
+shell $PATH.  
+As an example I'm using zsh which is the default shell for MacOS. 
 
-Edit .zshrc in your user directory and add the following line (replacing the 
-first part with the path to the repo)
+Edit .zshrc in your home directory and add the following line:
 
 ```shell
-# Unity Shell
-export PATH="/<YOUR PATH TO UNITY SHELL>/bin:$PATH"
-```
-
-Command autocompletion can be added by running
-```shell
-source <(unitysh _completion --generate-hook)
+# Maestro Shell (allow vendor bin execution from project root)
+export PATH="vendor/bin:${COMPOSER_HOME}/vendor/bin:${PATH}"
 ```
 
 Once saved you will need to run 
@@ -84,23 +59,16 @@ Once saved you will need to run
 source ~/.zshrc
 ```
 
-# Usage
+## Drupal composer file requirements
 
-If you have added Unity Shell to your shell path you can simply shell into a 
-local Unity2 server fork and run 
-```shell
-unitysh 
-``` 
-Which will provide a list of commands, the majority of which you can ignore, 
-the interesting ones are listed in the next 
-section.
+You must ensure the following script is included in the project composer file
+when using Maestro Shell.
 
-# Commands
+```json
+"scripts": {
+        "post-package-update": [
+            "Maestro\\Shell\\Events\\ComposerEventListener::postPackageUpdate"
+        ]
+    }
+```
 
-project:create -- Create new Unity server project.   
-project:build -- Build the current project.  
-project:info -- Display information about the project.
-
-site:add -- Add a new site to the project.  
-site:remove -- Remove a site from the project.  
-site:edit -- Edit details of an existing site.
