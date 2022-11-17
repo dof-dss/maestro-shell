@@ -4,10 +4,12 @@ namespace Maestro\Shell\Commands;
 
 use Maestro\Core\Context;
 use Maestro\Shell\Filesystem\FilesystemManager;
+use Maestro\Shell\Filesystem\PathContentsFilter;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
@@ -68,6 +70,19 @@ class ProjectCreateCommand extends Command {
         return Command::FAILURE;
       }
     }
+
+    $project_types = $fs->pathContents('/vendor/dof-dss/maestro-hosting/resources', PathContentsFilter::Directories);
+
+    $helper = $this->getHelper('question');
+    $project_type_list = new ChoiceQuestion(
+      'Please select the project type',
+      $project_types,
+      0
+    );
+
+    $project_type_list->setErrorMessage('Project type %s is invalid.');
+    $project['project_type'] = $helper->ask($input, $output, $project_type_list);
+
 
     if (!$fs->exists('/project')) {
       $fs->createDirectory('/project');
