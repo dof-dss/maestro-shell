@@ -138,6 +138,42 @@ class Filesystem implements FilesystemInterface {
   /**
    * {@inheritdoc}
    */
+  public function pathContents($path, PathContentsFilter $filter = PathContentsFilter::All) {
+    if (!is_dir($path) && is_file($path)) {
+      return $this->read($path);
+    }
+
+    $contents = array_diff(scandir($this->fullPath($path)), array('..', '.'));
+
+    if ($filter === PathContentsFilter::Directories) {
+      $directories = [];
+      foreach ($contents as $item) {
+        if (is_dir($this->fullPath($path) . '/' . $item)) {
+          $directories[] = $item;
+        }
+      }
+
+      return $directories;
+    }
+    elseif ($filter === PathContentsFilter::Files) {
+      $files = [];
+      foreach ($contents as $item) {
+        if (is_file($this->fullPath($path) . '/' . $item)) {
+          $files[] = $item;
+        }
+      }
+
+      return $files;
+    }
+    else {
+      return $contents;
+    }
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function link($source, $link) {
     $this->fs->symlink($this->fullPath($source), $this->fullPath($link));
   }
