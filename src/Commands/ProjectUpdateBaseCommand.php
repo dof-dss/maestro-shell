@@ -53,8 +53,11 @@ class ProjectUpdateBaseCommand extends Command {
     if (!$process->isSuccessful()) {
       // If the error warns that upstream doesn't exist, try adding it.
       if (str_starts_with($process->getErrorOutput(), "fatal: 'upstream' does not appear to be a git repository")) {
+        $fs = FilesystemManager::fs(Context::Project);
+        $composer_json = $fs->read('/composer.json');
+
         $commands = [];
-        $commands[] = "git remote add upstream https://github.com/dof-dss/unity_base.git";
+        $commands[] = "git remote add upstream https://github.com/" . $composer_json->name;
         $commands[] = "git remote set-url --push upstream no-push";
 
         $process = new Process(implode(' && ', $commands));
@@ -64,7 +67,7 @@ class ProjectUpdateBaseCommand extends Command {
         if (!$process->isSuccessful()) {
           $io->error("Unable to add upstream remote. Check your permissions and manually add the upstream remote by running:");
           $io->listing([
-            'git remote add upstream https://github.com/dof-dss/unity_base.git',
+            'git remote add upstream https://github.com/' . $composer_json->name,
             'git remote set-url --push upstream no-push',
           ]);
           return Command::FAILURE;
