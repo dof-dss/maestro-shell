@@ -46,6 +46,24 @@ class ProjectCreateCommand extends Command {
     $io = new SymfonyStyle($input, $output);
     $fs = FilesystemManager::fs(Context::Project);
 
+    $project_types = $fs->pathContents('/vendor/dof-dss/maestro-hosting/resources', PathContentsFilter::Directories);
+
+    // Prompt the user to select a project type if more than one is available.
+    // This is derived from the directories listed in maestro-hosting/resources.
+    if (count($project_types) > 1) {
+      $helper = $this->getHelper('question');
+      $project_type_list = new ChoiceQuestion(
+        'Please select the project type',
+        $project_types,
+        0
+      );
+
+      $project_type_list->setErrorMessage('Project type %s is invalid.');
+      $project['project_type'] = $helper->ask($input, $output, $project_type_list);
+    } else {
+      $project['project_type'] = $project_types[0];
+    }
+
     if ($fs->exists('/project/project.yml')) {
       $io->error('A project definition already exists.');
       return Command::FAILURE;
@@ -70,19 +88,6 @@ class ProjectCreateCommand extends Command {
         return Command::FAILURE;
       }
     }
-
-    $project_types = $fs->pathContents('/vendor/dof-dss/maestro-hosting/resources', PathContentsFilter::Directories);
-
-    $helper = $this->getHelper('question');
-    $project_type_list = new ChoiceQuestion(
-      'Please select the project type',
-      $project_types,
-      0
-    );
-
-    $project_type_list->setErrorMessage('Project type %s is invalid.');
-    $project['project_type'] = $helper->ask($input, $output, $project_type_list);
-
 
     if (!$fs->exists('/project')) {
       $fs->createDirectory('/project');
