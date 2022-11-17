@@ -51,7 +51,7 @@ class SiteDefaultCommand extends Command {
 
       $helper = $this->getHelper('question');
       $sites_choice_list = new ChoiceQuestion(
-        'Please select a site to edit',
+        'Please select a site to set as the project default',
         $site_options,
         0
       );

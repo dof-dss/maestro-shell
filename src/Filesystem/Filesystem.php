@@ -74,6 +74,11 @@ class Filesystem implements FilesystemInterface {
       case 'env':
         return parse_ini_file($path);
 
+      case 'json':
+      case 'lock':
+        $data = file_get_contents($path);
+        return json_decode($data);
+
       default:
         return file_get_contents($path);
 
@@ -92,6 +97,10 @@ class Filesystem implements FilesystemInterface {
 
     if (str_ends_with($path, '.yml') || str_ends_with($path, '.yaml')) {
       $content = Yaml::dump($content, 6);
+    }
+
+    if (str_ends_with($path, '.json') || str_ends_with($path, '.lock')) {
+      $content = json_encode($content);
     }
 
     if ($add_warning) {
