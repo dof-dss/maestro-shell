@@ -66,14 +66,11 @@ class ProjectUpdateBaseCommand extends Command {
 
         if (!$process->isSuccessful()) {
           $io->error("Unable to add upstream remote. Check your permissions and manually add the upstream remote by running:");
-          $io->listing([
-            'git remote add upstream https://github.com/' . $composer_json->name,
-            'git remote set-url --push upstream no-push',
-          ]);
+          $io->listing($commands);
           return Command::FAILURE;
         }
 
-        $io->success("Successfully added upstream remote to the repository.");
+        $io->success("Successfully added upstream remote (" . $composer_json->name . ") to the repository.");
         $this->execute($input, $output);
       }
       else {
@@ -81,7 +78,7 @@ class ProjectUpdateBaseCommand extends Command {
       }
     }
     else {
-      $io->success('Update from Unity Base successful.');
+      $io->success('Update from project base repository successful.');
 
       if ($io->confirm('Would you like to rebuild the project?')) {
         $build_command = $this->getApplication()->find('project:build');
