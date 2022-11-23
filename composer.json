@@ -21,7 +21,7 @@
     "composer/ca-bundle": "^1.3",
     "romaricdrigon/metayaml": "dev-master",
     "symfony/yaml": "^4.2",
-    "dof-dss/maestro-core": "^0.0.8",
+    "dof-dss/maestro-core": "^1.0",
     "webflo/drupal-finder": "^1.2",
     "symfony/http-client": "^5.4",
     "symfony/cache": "^5.4"
