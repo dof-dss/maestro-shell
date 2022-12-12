@@ -94,7 +94,7 @@ class ProjectCreateCommand extends Command {
     $project_disk_size = $input->getArgument('project_disk_size');
 
     if (empty($project_disk_size)) {
-      $project_disk_size = $io->ask('Please provide a PlatformSH disk size for the project (8 GB)');
+      $project_disk_size = $io->ask('Please provide a PlatformSH disk size for the project (default 8 GB)');
       if (empty($project_disk_size)) {
         $project_disk_size = 8000;
       }
@@ -103,7 +103,7 @@ class ProjectCreateCommand extends Command {
     $db_disk_size = $input->getArgument('db_disk_size');
 
     if (empty($db_disk_size)) {
-      $db_disk_size = $io->ask('Please provide a PlatformSH database disk size for the project (4 GB)');
+      $db_disk_size = $io->ask('Please provide a PlatformSH database disk size for the project (default 4 GB)');
       if (empty($db_disk_size)) {
         $db_disk_size = 4000;
       }
