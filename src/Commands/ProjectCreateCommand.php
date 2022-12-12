@@ -27,6 +27,7 @@ class ProjectCreateCommand extends Command {
 
     $this->addArgument('name', InputArgument::OPTIONAL, 'Project name');
     $this->addArgument('id', InputArgument::OPTIONAL, 'PlatformSH project ID');
+    $this->addArgument('project_disk_size', InputArgument::OPTIONAL, 'PlatformSH project disk size');
   }
 
   /**
@@ -89,6 +90,16 @@ class ProjectCreateCommand extends Command {
       }
     }
 
+    $project_disk_size = $input->getArgument('project_disk_size');
+
+    if (empty($project_disk_size)) {
+      $project_disk_size = $io->ask('Please provide a PlatformSH disk size for the project');
+      if (empty($project_disk_size)) {
+        $io->error('Project disk size not given');
+        return Command::FAILURE;
+      }
+    }
+
     if (!$fs->exists('/project')) {
       $fs->createDirectory('/project');
       $fs->createDirectory('/project/config');
@@ -98,6 +109,7 @@ class ProjectCreateCommand extends Command {
 
     $project['project_name'] = $project_name;
     $project['project_id'] = $project_id;
+    $project['project_disk_size'] = $project_disk_size;
 
     $fs->write('/project/project.yml', $project);
     $io->success('Created project file');
