@@ -28,6 +28,7 @@ class ProjectCreateCommand extends Command {
     $this->addArgument('name', InputArgument::OPTIONAL, 'Project name');
     $this->addArgument('id', InputArgument::OPTIONAL, 'PlatformSH project ID');
     $this->addArgument('project_disk_size', InputArgument::OPTIONAL, 'PlatformSH project disk size');
+    $this->addArgument('db_disk_size', InputArgument::OPTIONAL, 'PlatformSH database disk size');
   }
 
   /**
@@ -93,10 +94,18 @@ class ProjectCreateCommand extends Command {
     $project_disk_size = $input->getArgument('project_disk_size');
 
     if (empty($project_disk_size)) {
-      $project_disk_size = $io->ask('Please provide a PlatformSH disk size for the project');
+      $project_disk_size = $io->ask('Please provide a PlatformSH disk size for the project (8 GB)');
       if (empty($project_disk_size)) {
-        $io->error('Project disk size not given');
-        return Command::FAILURE;
+        $project_disk_size = 8000;
+      }
+    }
+
+    $db_disk_size = $input->getArgument('db_disk_size');
+
+    if (empty($db_disk_size)) {
+      $db_disk_size = $io->ask('Please provide a PlatformSH database disk size for the project (4 GB)');
+      if (empty($db_disk_size)) {
+        $db_disk_size = 4000;
       }
     }
 
@@ -110,6 +119,7 @@ class ProjectCreateCommand extends Command {
     $project['project_name'] = $project_name;
     $project['project_id'] = $project_id;
     $project['project_disk_size'] = $project_disk_size;
+    $project['db_disk_size'] = $db_disk_size;
 
     $fs->write('/project/project.yml', $project);
     $io->success('Created project file');
