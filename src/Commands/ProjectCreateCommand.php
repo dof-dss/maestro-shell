@@ -94,18 +94,30 @@ class ProjectCreateCommand extends Command {
     $project_disk_size = $input->getArgument('project_disk_size');
 
     if (empty($project_disk_size)) {
-      $project_disk_size = $io->ask('Please provide a PlatformSH disk size for the project (default 8 GB)');
+      $project_disk_size = $io->ask('Please provide a PlatformSH disk size in megabytes for the project (default 8000 MB)');
       if (empty($project_disk_size)) {
         $project_disk_size = 8000;
+      } elseif (!is_numeric($project_disk_size)) {
+        $io->error('Project disk size must be numeric');
+        return Command::FAILURE;
+      } else {
+        // Store as a number.
+        $project_disk_size += 0;
       }
     }
 
     $db_disk_size = $input->getArgument('db_disk_size');
 
     if (empty($db_disk_size)) {
-      $db_disk_size = $io->ask('Please provide a PlatformSH database disk size for the project (default 4 GB)');
+      $db_disk_size = $io->ask('Please provide a PlatformSH database disk size in megabytes for the project (default 4000 MB)');
       if (empty($db_disk_size)) {
         $db_disk_size = 4000;
+      } elseif (!is_numeric($db_disk_size)) {
+        $io->error('Database disk size must be numeric');
+        return Command::FAILURE;
+      } else {
+        // Store as a number.
+        $db_disk_size += 0;
       }
     }
 
