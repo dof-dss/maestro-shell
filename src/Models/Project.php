@@ -150,6 +150,20 @@ class Project implements ProjectInterface {
   /**
    * {@inheritdoc}
    */
+  public function project_disk_size() {
+    return $this->project['project_disk_size'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function db_disk_size() {
+    return $this->project['db_disk_size'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function sites() {
     return $this->project['sites'] ?? [];
   }

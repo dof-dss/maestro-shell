@@ -27,6 +27,8 @@ class ProjectCreateCommand extends Command {
 
     $this->addArgument('name', InputArgument::OPTIONAL, 'Project name');
     $this->addArgument('id', InputArgument::OPTIONAL, 'PlatformSH project ID');
+    $this->addArgument('project_disk_size', InputArgument::OPTIONAL, 'PlatformSH project disk size');
+    $this->addArgument('db_disk_size', InputArgument::OPTIONAL, 'PlatformSH database disk size');
   }
 
   /**
@@ -89,6 +91,36 @@ class ProjectCreateCommand extends Command {
       }
     }
 
+    $project_disk_size = $input->getArgument('project_disk_size');
+
+    if (empty($project_disk_size)) {
+      $project_disk_size = $io->ask('Please provide a PlatformSH disk size in megabytes for the project (default 8000 MB)');
+      if (empty($project_disk_size)) {
+        $project_disk_size = 8000;
+      } elseif (!is_numeric($project_disk_size)) {
+        $io->error('Project disk size must be numeric');
+        return Command::FAILURE;
+      } else {
+        // Store as a number.
+        $project_disk_size += 0;
+      }
+    }
+
+    $db_disk_size = $input->getArgument('db_disk_size');
+
+    if (empty($db_disk_size)) {
+      $db_disk_size = $io->ask('Please provide a PlatformSH database disk size in megabytes for the project (default 4000 MB)');
+      if (empty($db_disk_size)) {
+        $db_disk_size = 4000;
+      } elseif (!is_numeric($db_disk_size)) {
+        $io->error('Database disk size must be numeric');
+        return Command::FAILURE;
+      } else {
+        // Store as a number.
+        $db_disk_size += 0;
+      }
+    }
+
     if (!$fs->exists('/project')) {
       $fs->createDirectory('/project');
       $fs->createDirectory('/project/config');
@@ -98,6 +130,8 @@ class ProjectCreateCommand extends Command {
 
     $project['project_name'] = $project_name;
     $project['project_id'] = $project_id;
+    $project['project_disk_size'] = $project_disk_size;
+    $project['db_disk_size'] = $db_disk_size;
 
     $fs->write('/project/project.yml', $project);
     $io->success('Created project file');
