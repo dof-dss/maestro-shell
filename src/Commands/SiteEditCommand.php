@@ -2,6 +2,9 @@
 
 namespace Maestro\Shell\Commands;
 
+use Maestro\Core\Context;
+use Maestro\Core\Utils;
+use Maestro\Shell\Filesystem\FilesystemManager;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -40,6 +43,7 @@ class SiteEditCommand extends Command {
    */
   protected function execute(InputInterface $input, OutputInterface $output): int {
     $io = new SymfonyStyle($input, $output);
+    $site_id_update = FALSE;
 
     $site_id = $input->getArgument('siteid');
 
@@ -71,6 +75,25 @@ class SiteEditCommand extends Command {
     $site_current = $this->project()->sites()[$site_id];
     $site['name'] = $io->ask('Site name', $site_current['name']);
     $site['url'] = $io->ask('Site URL (minus the protocol and trailing slash', $site_current['url']);
+
+    if ($site['url'] !== $site_current['url']) {
+      if ($io->confirm('Site ID will be updated, would you like to update the project directories and symlinks?')) {
+        $this->project()->removeSite($site_id);
+
+        $new_site_id = Utils::createSiteId($site['url']);
+
+        $fs = FilesystemManager::fs(Context::Project);
+        $fs->copyDirectory('/project/config/' . $site_id, '/project/config/' . $new_site_id);
+        $fs->copyDirectory('/project/sites/' . $site_id, '/project/sites/' . $new_site_id);
+        $fs->delete('/project/config/' . $site_id);
+        $fs->delete('/project/sites/' . $site_id);
+        $fs->delete('/web/sites/' . $site_id);
+
+        $site_id = $new_site_id;
+        $site_id_update = TRUE;
+      }
+    }
+
     if ($io->confirm('Does this site require a Solr search?')) {
       $site['solr'] = $site_id;
     }
@@ -92,7 +115,11 @@ class SiteEditCommand extends Command {
     $site_status = $helper->ask($input, $output, $site_status_list);
     $site['status'] = $site_status;
 
-    $this->project()->updateSite($site_id, $site);
+    if ($site_id_update) {
+      $this->project()->addSite($site_id, $site);
+    } else {
+      $this->project()->updateSite($site_id, $site);
+    }
 
     if ($io->confirm('Would you like to rebuild the project?')) {
       $build_command = $this->getApplication()->find('project:build');
