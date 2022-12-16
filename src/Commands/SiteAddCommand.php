@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Maestro\Core\Utils;
 
 /**
  * Command to add a site to a Maestro project.
@@ -41,18 +42,11 @@ class SiteAddCommand extends Command {
   protected function execute(InputInterface $input, OutputInterface $output): int {
     $io = new SymfonyStyle($input, $output);
 
-    $site_id = $input->getArgument('siteid');
-
-    if (empty($site_id)) {
-      $site_id = $io->ask('Please provide a site ID (e.g. uregni)');
-      if (empty($site_id)) {
-        $io->error('Site ID not given');
-        return Command::FAILURE;
-      }
-    }
-
     $site['name'] = $io->ask('Site name');
     $site['url'] = $io->ask('Site URL (minus the protocol and trailing slash');
+
+    $site_id = Utils::createSiteId($site['url']);
+
     if ($io->confirm('Does this site require a Solr search?')) {
       $site['solr'] = $site_id;
     }
