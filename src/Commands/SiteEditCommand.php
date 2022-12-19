@@ -77,21 +77,26 @@ class SiteEditCommand extends Command {
     $site['url'] = $io->ask('Site URL (minus the protocol and trailing slash', $site_current['url']);
 
     if ($site['url'] !== $site_current['url']) {
-      if ($io->confirm('Site ID will be updated, would you like to update the project directories and symlinks?')) {
-        $this->project()->removeSite($site_id);
+      $old_site_id = $site_id;
+      $site_id = Utils::createSiteId($site['url']);
 
-        $new_site_id = Utils::createSiteId($site['url']);
+      if ($io->confirm('Site ID will be updated, would you like to update the project directories and symlinks?')) {
+        $this->project()->removeSite($old_site_id);
 
         $fs = FilesystemManager::fs(Context::Project);
-        $fs->copyDirectory('/project/config/' . $site_id, '/project/config/' . $new_site_id);
-        $fs->copyDirectory('/project/sites/' . $site_id, '/project/sites/' . $new_site_id);
-        $fs->delete('/project/config/' . $site_id);
-        $fs->delete('/project/sites/' . $site_id);
-        $fs->delete('/web/sites/' . $site_id);
 
-        $site_id = $new_site_id;
-        $site_id_update = TRUE;
+        // Move existing site assets to the new site id.
+        $fs->copyDirectory('/project/config/' . $old_site_id, '/project/config/' . $site_id);
+        $fs->copyDirectory('/project/sites/' . $old_site_id, '/project/sites/' . $site_id);
+
+        // Remove the old site id directories.
+        $fs->delete('/project/config/' . $old_site_id);
+        $fs->delete('/project/sites/' . $old_site_id);
+
+        // Remove old symlink. A new one will be created during project build.
+        $fs->delete('/web/sites/' . $old_site_id);
       }
+      $site_id_update = TRUE;
     }
 
     if ($io->confirm('Does this site require a Solr search?')) {
