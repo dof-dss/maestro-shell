@@ -123,6 +123,12 @@ class SiteEditCommand extends Command {
     if ($site_id_update) {
       $this->project()->addSite($site_id, $site);
     } else {
+      // Ensure that default setting is not lost.
+      if ($this->project()->sites()[$site_id]['default']) {
+        $site['default'] = true;
+      } else {
+        $site['default'] = false;
+      }
       $this->project()->updateSite($site_id, $site);
     }
 
