@@ -84,16 +84,16 @@
         },
         {
             "name": "dof-dss/maestro-core",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dof-dss/maestro-core.git",
-                "reference": "df3ed392519a151dc87073ce68939b1a7d41ce05"
+                "reference": "a05f0bbc500154d786f030101e06a258db112e8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dof-dss/maestro-core/zipball/df3ed392519a151dc87073ce68939b1a7d41ce05",
-                "reference": "df3ed392519a151dc87073ce68939b1a7d41ce05",
+                "url": "https://api.github.com/repos/dof-dss/maestro-core/zipball/a05f0bbc500154d786f030101e06a258db112e8c",
+                "reference": "a05f0bbc500154d786f030101e06a258db112e8c",
                 "shasum": ""
             },
             "type": "library",
@@ -115,9 +115,9 @@
             "description": "Maestro core composition project",
             "support": {
                 "issues": "https://github.com/dof-dss/maestro-core/issues",
-                "source": "https://github.com/dof-dss/maestro-core/tree/1.0.1"
+                "source": "https://github.com/dof-dss/maestro-core/tree/1.0.2"
             },
-            "time": "2022-12-16T14:29:11+00:00"
+            "time": "2023-05-15T14:40:57+00:00"
         },
         {
             "name": "psr/cache",
