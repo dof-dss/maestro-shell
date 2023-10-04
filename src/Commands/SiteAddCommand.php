@@ -51,9 +51,9 @@ class SiteAddCommand extends Command {
       $site['solr'] = $site_id;
     }
 
-    $site['www'] = 'false';
+    $site['www'] = false;
     if ($io->confirm('Should this site be served from www ?')) {
-      $site['www'] = 'true';
+      $site['www'] = true;
     }
 
     // @todo Prompt if user would like to use cron defaults.
