@@ -42,53 +42,80 @@ class ProjectUpdateBaseCommand extends Command {
   protected function execute(InputInterface $input, OutputInterface $output): int {
     $io = new SymfonyStyle($input, $output);
 
-    $commands = [];
-    $commands[] = "git fetch upstream main";
-    $commands[] = "git pull --no-rebase upstream main";
-
-    $process = new Process(implode(' && ', $commands));
+    $process = new Process(["git", "remote", "get-url", "upstream"]);
     $process->setWorkingDirectory(FilesystemManager::rootPath(Context::Project));
     $process->run();
 
     if (!$process->isSuccessful()) {
-      // If the error warns that upstream doesn't exist, try adding it.
-      if (str_starts_with($process->getErrorOutput(), "fatal: 'upstream' does not appear to be a git repository")) {
-        $fs = FilesystemManager::fs(Context::Project);
-        $composer_json = $fs->read('/composer.json');
+      $this->addUpstreamRepo($input, $output, $io);
+    } else {
+      $io->info("Fetching upstream");
+      $process = new Process(["git", "fetch", "upstream", "main"]);
+      $process->setWorkingDirectory(FilesystemManager::rootPath(Context::Project));
+      $process->run();
 
-        $commands = [];
-        $commands[] = "git remote add upstream https://github.com/" . $composer_json->name;
-        $commands[] = "git remote set-url --push upstream no-push";
-
-        $process = new Process(implode(' && ', $commands));
+      if ($process->isSuccessful()) {
+        $process = new Process(["git", "pull", "upstream", "main", "--no-rebase"]);
         $process->setWorkingDirectory(FilesystemManager::rootPath(Context::Project));
-        $process->run();
 
-        if (!$process->isSuccessful()) {
-          $io->error("Unable to add upstream remote. Check your permissions and manually add the upstream remote by running:");
-          $io->listing($commands);
+        // Output any warnings/errors
+        $process->run(function ($type, $buffer) use ($io) {
+          if (Process::ERR === $type) {
+            $io->error($buffer);
+          } else {
+            $io->info($buffer);
+          }
+        });
+
+        if ($process->isSuccessful()) {
+          $io->success('Update from project base repository successful.');
+
+          if ($io->confirm('Would you like to rebuild the project?')) {
+            $build_command = $this->getApplication()->find('project:build');
+            return $build_command->run(new ArrayInput([]), $output);
+          }
+          return Command::SUCCESS;
+        } else {
+          $io->warning("Unable to update base.");
           return Command::FAILURE;
         }
-
-        $io->success("Successfully added upstream remote (" . $composer_json->name . ") to the repository.");
-        $this->execute($input, $output);
       }
-      else {
-        throw new ProcessFailedException($process);
-      }
-    }
-    else {
-      $io->success('Update from project base repository successful.');
-
-      if ($io->confirm('Would you like to rebuild the project?')) {
-        $build_command = $this->getApplication()->find('project:build');
-        return $build_command->run(new ArrayInput([]), $output);
-      }
-
-      return Command::SUCCESS;
     }
 
     return Command::FAILURE;
   }
 
+  /**
+   * Adds the upstream repository to the local user's git repository.
+   *
+   * @param InputInterface $input
+   * @param OutputInterface $output
+   * @param SymfonyStyle $io
+   * @return int|void
+   * @throws \Exception
+   */
+  private function addUpstreamRepo(InputInterface $input, OutputInterface $output, SymfonyStyle $io) {
+    $fs = FilesystemManager::fs(Context::Project);
+    $composer_json = $fs->read('/composer.json');
+
+    $process = new Process(["git", "remote", "add", "upstream", "https://github.com/" . $composer_json->name]);
+    $process->setWorkingDirectory(FilesystemManager::rootPath(Context::Project));
+    $process->run();
+
+    if ($process->isSuccessful()) {
+      $process = new Process(["git", "remote", "set-url", "--push", "upstream", "no-push"]);
+      $process->setWorkingDirectory(FilesystemManager::rootPath(Context::Project));
+      $process->run();
+
+      if ($process->isSuccessful()) {
+        $io->success("Successfully added upstream remote (" . $composer_json->name . ") to the repository.");
+        $this->execute($input, $output);
+      }
+    } else {
+      if (!$process->isSuccessful()) {
+        $io->error("Unable to add upstream remote. Check your permissions and manually add the upstream remote.");
+        return Command::FAILURE;
+      }
+    }
+  }
 }
