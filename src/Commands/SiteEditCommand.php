@@ -103,6 +103,11 @@ class SiteEditCommand extends Command {
       $site['solr'] = $site_id;
     }
 
+    $site['www'] = false;
+    if ($io->confirm('Should this site be served from www ?')) {
+      $site['www'] = true;
+    }
+
     $site['cron_spec'] = '10 * * * *';
     $site['cron_cmd'] = 'cd web/sites/' . $site_id . ' ; drush core-cron';
 
