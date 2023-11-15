@@ -2208,6 +2208,7 @@
             "homepage": "https://symfony.com",
             "support": {
                 "source": "https://github.com/symfony/yaml/tree/v6.3.8"
+
             },
             "funding": [
                 {
