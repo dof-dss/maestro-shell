@@ -23,7 +23,7 @@
     "symfony/yaml": "^6.3",
     "dof-dss/maestro-core": "^1.0",
     "webflo/drupal-finder": "^1.2",
-    "symfony/http-client": "^6.3",
+    "symfony/http-client": "^5.4",
     "symfony/cache": "^6.3"
   },
   "suggest": {
