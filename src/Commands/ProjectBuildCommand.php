@@ -79,6 +79,27 @@ class ProjectBuildCommand extends Command {
       }
     }
 
+    // Generate the Readme file for this project.
+    $readme = "# " . $this->project->name() . " (" . $this->project->id() . ") \r\n";
+    $readme .= "\r\n | Site  | ID | URL | Status | Default |\r\n";
+    $readme .= "| --- | --- | --- | --- | --- | \r\n";
+
+    foreach ($this->project->sites() as $id => $site) {
+      $default = $site['default'] ? '![#e8f5e9](https://placehold.co/80x30/c8e6c9/1b5e20.png?text=Yes&font=source-sans-pro)' : ' ';
+      $status = match($site['status']) {
+        'development' => '![#fff3e0](https://placehold.co/140x30/ffe0b2/e65100.png?text=Development&font=source-sans-pro)',
+        'production' => '![#e8f5e9](https://placehold.co/140x30/c8e6c9/1b5e20.png?text=Production&font=source-sans-pro)',
+        default => '[#e8f5e9](https://placehold.co/140x30/cfd8dc/37474f.png?text=Unknown&font=source-sans-pro)',
+      };
+      $readme .= "| " . $site['name'] . " | " . $id . " | " . $site['url'] . " | " . $status . " | " . $default  . " | \r\n";
+    }
+
+    $readme .= "Last updated: " . date("d/m/Y H:i");
+
+    $fs->write('/README.md', $readme);
+
+
+
     $io->title('## Instructions ##');
     $io->listing($this->instructions);
 
