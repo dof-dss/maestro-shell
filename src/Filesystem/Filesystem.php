@@ -96,7 +96,7 @@ class Filesystem implements FilesystemInterface {
     }
 
     if (str_ends_with($path, '.yml') || str_ends_with($path, '.yaml')) {
-      $content = Yaml::dump($content, 6);
+      $content = Yaml::dump($content, 6, 6, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
     }
 
     if (str_ends_with($path, '.json') || str_ends_with($path, '.lock')) {
