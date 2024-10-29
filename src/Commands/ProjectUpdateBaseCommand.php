@@ -42,6 +42,20 @@ class ProjectUpdateBaseCommand extends Command {
   protected function execute(InputInterface $input, OutputInterface $output): int {
     $io = new SymfonyStyle($input, $output);
 
+    // Should we allow thsi command in this project ?
+    // ('Maestro pub' is not a valid command in Corp Lite or Unity Intranet)
+    $fs = FilesystemManager::fs(Context::Project);
+    $composer_json = $fs->read('/composer.json');
+    $project_name = $composer_json->name;
+    if (preg_match('/unity_intranet/', $project_name)) {
+      $io->info("'maestro pub' command should not be used in Unity Intranet as there is no parent repo");
+      return Command::FAILURE;
+    }
+    if (preg_match('/corp-lite/', $project_name)) {
+      $io->info("'maestro pub' command should not be used in Corp Lite as there is no parent repo");
+      return Command::FAILURE;
+    }
+    
     $process = new Process(["git", "remote", "get-url", "upstream"]);
     $process->setWorkingDirectory(FilesystemManager::rootPath(Context::Project));
     $process->run();
