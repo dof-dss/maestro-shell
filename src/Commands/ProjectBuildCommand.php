@@ -65,7 +65,6 @@ class ProjectBuildCommand extends Command {
     // Retrieve each hosting service and if enabled, execute its build.
     $hosting_service_ids = $this->container()->findTaggedServiceIds('maestro.hosting');
 
-
     // Iterate and run commands against each service.
     if (!empty($hosting_service_ids)) {
       $io->title('## Hosting setup ##');
