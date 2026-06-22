@@ -43,7 +43,7 @@ class SiteAddCommand extends Command {
     $io = new SymfonyStyle($input, $output);
 
     $site['name'] = $io->ask('Site name');
-    $site['url'] = $io->ask('Site URL (minus the protocol and trailing slash');
+    $site['url'] = $io->ask('Site URL (minus the protocol and trailing slash)');
 
     $site_id = Utils::createSiteId($site['url']);
 
