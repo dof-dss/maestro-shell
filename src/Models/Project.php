@@ -46,7 +46,7 @@ class Project implements ProjectInterface {
       $this->project = $project;
     }
     catch (\Exception $exception) {
-      throwException($exception);
+      throw $exception;
     }
   }
 
@@ -59,7 +59,7 @@ class Project implements ProjectInterface {
       $this->fs()->write('/project/project.yml', $this->project);
     }
     catch (\Exception $exception) {
-      throwException($exception);
+      throw $exception;
     }
   }
 
@@ -122,7 +122,7 @@ class Project implements ProjectInterface {
       return $schema->validate($project_data);
     }
     catch (\Exception $exception) {
-      return $exception;
+      throw $exception;
     }
   }
 

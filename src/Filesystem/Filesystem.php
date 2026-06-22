@@ -148,7 +148,8 @@ class Filesystem implements FilesystemInterface {
    * {@inheritdoc}
    */
   public function pathContents($path, PathContentsFilter $filter = PathContentsFilter::All) {
-    if (!is_dir($path) && is_file($path)) {
+    $fullPath = $this->fullPath($path);
+    if (!is_dir($fullPath) && is_file($fullPath)) {
       return $this->read($path);
     }
 

@@ -141,7 +141,7 @@ class SiteEditCommand extends Command {
       $build_command = $this->getApplication()->find('project:build');
       return $build_command->run(new ArrayInput([]), $output);
     }
-    return Command::FAILURE;
+    return Command::SUCCESS;
   }
 
 }
