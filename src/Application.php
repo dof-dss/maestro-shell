@@ -55,6 +55,10 @@ class Application extends ParentApplication {
    * @return ContainerBuilder
    */
   public function container() {
+    if ($this->container !== null) {
+      return $this->container;
+    }
+
     $fs = FilesystemManager::fs(Context::Project);
 
     if ($fs->exists('/maestro.yml')) {
