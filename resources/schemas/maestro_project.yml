@@ -34,6 +34,8 @@ root:
             _type: text
             _not_empty: true
             _required: true
+          www:
+            _type: boolean
           solr:
             _type: text
             _not_empty: true
